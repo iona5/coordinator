@@ -1,0 +1,38 @@
+# This file should be included when you package your plugin.# Mandatory items:
+
+[general]
+name=Coordinator
+qgisMinimumVersion=3.4
+description=Capture, transform and use coordinates
+version=0.1
+author=Jonas Küpper
+email=qgis@ag99.de
+
+about=The purpose of this plugin is to make handling of coordinate IO easier and includes a transformation tool and supports creation of simple features.
+ This plugin overlaps in different ways with the purpose of the plugins Coordinate Capture, Lat Lon Tools and the Advanced Digitize Panel. It however aims to integrate in a clean and simple interface multiple tasks these tools are sometimes used together. And yes...: Its almost as it's just another coordinate tool. :)
+ The two main functions of this plugin are: 
+ (A) a simple and easy to use coordinate transformation tool with an integrated picker and 
+ (B) a quick to use coordinate digitizer with support for coordinates in an arbitrary CRS independent of project or layer CRS. 
+ Both of these functions are seamlessly integrated and are implemented as a single, unique operation.
+
+tracker=https://github.com/iona5/coordinator/issues
+repository=https://github.com/iona5/coordinator
+# End of mandatory metadata
+
+# Recommended items:
+
+# Uncomment the following line and add your changelog:
+changelog=0.1 - Initial release
+
+# Tags are comma separated with spaces allowed
+tags=python,coordinate,coordinates,transformation,digitizing,clipboard,capture
+
+homepage=https://github.com/iona5/coordinator
+category=Plugins
+icon=icons/marker.svg
+# experimental flag
+experimental=True
+
+# deprecated flag (applies to the whole plugin, not just a single version)
+deprecated=False
+

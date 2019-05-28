@@ -1,0 +1,11 @@
+resources.py
+.project
+.pydevproject
+.settings
+__pycache__/
+*.gpkg-shm
+*.gpkg-wal
+*.bak
+*.bak~
+.coverage
+.noseids

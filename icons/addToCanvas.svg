@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
+	<!ENTITY ns_flows "http://ns.adobe.com/Flows/1.0/">
+]>
+<svg version="1.1"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+	 x="0px" y="0px" width="24px" height="24px" viewBox="-1 -1 24 24" enable-background="new -1 -1 24 24" xml:space="preserve">
+<defs>
+</defs>
+<path fill="#8CBE8C" stroke="#4C4D4C" stroke-width="1" stroke-linecap="round" stroke-opacity="0.9333" d="M3,8.5L3,8.5
+	c1.381,0,2.5,1.119,2.5,2.5l0,0c0,1.381-1.119,2.5-2.5,2.5l0,0c-1.381,0-2.5-1.119-2.5-2.5l0,0C0.5,9.619,1.619,8.5,3,8.5z"/>
+<path fill="#8CBE8C" stroke="#4B4C4B" stroke-width="1" stroke-linecap="round" stroke-opacity="0.9569" d="M10,0.5L10,0.5
+	c1.381,0,2.5,1.119,2.5,2.5l0,0c0,1.381-1.119,2.5-2.5,2.5l0,0C8.619,5.5,7.5,4.381,7.5,3l0,0C7.5,1.619,8.619,0.5,10,0.5z"/>
+<path fill="#8CBE8C" stroke="#4C4D4C" stroke-width="1" stroke-linecap="round" stroke-opacity="0.9333" d="M19,2.5L19,2.5
+	c1.381,0,2.5,1.119,2.5,2.5l0,0c0,1.381-1.119,2.5-2.5,2.5l0,0c-1.381,0-2.5-1.119-2.5-2.5l0,0C16.5,3.619,17.619,2.5,19,2.5z"/>
+<path id="rect11_1_" fill="#5A8C5A" d="M14.811,13h5.379c1,0,1.811,0.811,1.811,1.811v5.379c0,1-0.811,1.811-1.811,1.811h-5.379
+	c-1,0-1.811-0.811-1.811-1.811v-5.379C13,13.811,13.811,13,14.811,13z"/>
+<path id="path13_1_" inkscape:connector-curvature="0" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="
+	M14.799,17.5h5.4"/>
+<path id="path15_1_" inkscape:connector-curvature="0" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="
+	M17.5,20.2v-5.4"/>
+<path id="path17_1_" inkscape:connector-curvature="0" opacity="0.3" fill="#FCFFFF" enable-background="new    " d="M13.9,17.5
+	H21.1c0,0,0,0,0-1.8s-0.449-1.8-3.6-1.8s-3.6,0-3.6,1.8S13.9,17.5,13.9,17.5z"/>
+</svg>

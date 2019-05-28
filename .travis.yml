@@ -1,0 +1,21 @@
+language: python
+
+python:
+  - "3.6"
+
+services: 
+  - docker
+
+install:
+  - pip install pyqt5
+  
+env:
+  - QGIS_RELEASE=3_4
+  - QGIS_RELEASE=3_6
+  
+script:
+  - cd ..
+  - mv coordinator/scripts/* .
+  - chmod +x build.sh docker_test_setup.sh travis_test.sh
+  - ./build.sh coordinator
+  - ./travis_test.sh ${QGIS_RELEASE}
