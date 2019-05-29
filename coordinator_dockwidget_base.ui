@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>YacubDockWidgetBase</class>
- <widget class="QDockWidget" name="YacubDockWidgetBase">
+ <class>CoordinatorDockWidgetBase</class>
+ <widget class="QDockWidget" name="CoordinatorDockWidgetBase">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -21,7 +21,7 @@
     <normaloff>:/plugins/coordinator/marker.svg</normaloff>:/plugins/coordinator/marker.svg</iconset>
   </property>
   <property name="windowTitle">
-   <string>Coordinator</string>
+   <string notr="true">Coordinator</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QGridLayout" name="gridLayout">
@@ -1620,11 +1620,11 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="resultFormatButtonGroup"/>
   <buttongroup name="inputFormatButtonGroup">
    <property name="exclusive">
     <bool>true</bool>
    </property>
   </buttongroup>
+  <buttongroup name="resultFormatButtonGroup"/>
  </buttongroups>
 </ui>
