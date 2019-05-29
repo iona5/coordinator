@@ -628,7 +628,7 @@
                     </font>
                    </property>
                    <property name="text">
-                    <string>°</string>
+                    <string notr="true">°</string>
                    </property>
                   </widget>
                  </item>
@@ -672,7 +672,7 @@
                <string comment="btCardinalLeft">toggle Hemisphere</string>
               </property>
               <property name="text">
-               <string>E</string>
+               <string comment="lblEast">E</string>
               </property>
              </widget>
             </item>
@@ -1056,7 +1056,7 @@
                <string comment="btCardinalLeft">Toggle Hemisphere</string>
               </property>
               <property name="text">
-               <string>N</string>
+               <string comment="lblNorth">N</string>
               </property>
              </widget>
             </item>

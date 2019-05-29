@@ -35,7 +35,7 @@ from PyQt5.Qt import pyqtSignal, QLocale, QApplication, QDoubleValidator, QIntVa
 from qgis.core import QgsMessageLog, QgsCoordinateFormatter
 
 from .funcs import coordinatorDecimalToDms, coordinatorDmsStringsToDecimal,\
-    coordinatorLog, CoordinatorTranslator as CT
+    coordinatorLog
 from PyQt5.QtWidgets import QLineEdit
 import pathlib
 
@@ -430,7 +430,7 @@ class CoordinatorDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
     def setNorthingInverted(self, northingInverted):
         self._northingInverted = northingInverted
-        label = CT.tr("S") if northingInverted else CT.tr("N")
+        label = self.tr("S", "lblSouth") if northingInverted else self.tr("N", "lblNorth")
         if(self._eastingLeftNorthingRight):
             self.rightDirButton.setText(label)
         else:
@@ -438,7 +438,7 @@ class CoordinatorDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
     def setEastingInverted(self, eastingInverted):
         self._eastingInverted = eastingInverted
-        label = CT.tr("W") if eastingInverted else CT.tr("E")
+        label = self.tr("W", "lblWest") if eastingInverted else self.tr("E", "lblEast")
         if(self._eastingLeftNorthingRight):
             self.leftDirButton.setText(label)
         else:
