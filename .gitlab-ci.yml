@@ -9,6 +9,7 @@ build:
   script:
     - docker run -d --name qgis-build -e DISPLAY=:99 qgis/qgis:release-3_6
     - sleep 2
+    - docker exec qgis-build sh -c "pip3 install markdown2"
     - docker exec qgis-build sh -c "mkdir -p /coordinator"
     - docker cp . qgis-build:/coordinator
     - chmod +x scripts/build.sh

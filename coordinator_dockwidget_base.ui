@@ -77,6 +77,66 @@
             </spacer>
            </item>
            <item>
+            <widget class="QPushButton" name="showHelp">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Show Help</string>
+             </property>
+             <property name="whatsThis">
+              <string/>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="resources.qrc">
+               <normaloff>:/plugins/coordinator/icons/help.svg</normaloff>:/plugins/coordinator/icons/help.svg</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>18</width>
+               <height>18</height>
+              </size>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_14">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>8</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
             <widget class="QPushButton" name="showMarker">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -106,7 +166,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resources.qrc">
                <normaloff>:/plugins/coordinator/icons/marker.svg</normaloff>:/plugins/coordinator/icons/marker.svg</iconset>
              </property>
              <property name="iconSize">
@@ -153,7 +213,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resources.qrc">
                <normaloff>:/plugins/coordinator/icons/panMap.svg</normaloff>:/plugins/coordinator/icons/panMap.svg</iconset>
              </property>
              <property name="iconSize">
@@ -219,7 +279,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resources.qrc">
                <normaloff>:/plugins/coordinator/icons/capture.svg</normaloff>:/plugins/coordinator/icons/capture.svg</iconset>
              </property>
              <property name="checkable">
@@ -1040,7 +1100,7 @@
                <string>Clear Input</string>
               </property>
               <property name="icon">
-               <iconset>
+               <iconset resource="resources.qrc">
                 <normaloff>:/plugins/coordinator/icons/clear.svg</normaloff>:/plugins/coordinator/icons/clear.svg</iconset>
               </property>
              </widget>
@@ -1249,7 +1309,7 @@
               <string>Set Output CRS to follow Layer Selection</string>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resources.qrc">
                <normaloff>:/plugins/coordinator/icons/unlocked.svg</normaloff>
                <normalon>:/plugins/coordinator/icons/locked.svg</normalon>:/plugins/coordinator/icons/unlocked.svg</iconset>
              </property>
@@ -1354,7 +1414,7 @@
                   <string>Copy Result to Clipboard</string>
                  </property>
                  <property name="icon">
-                  <iconset>
+                  <iconset resource="resources.qrc">
                    <normaloff>:/plugins/coordinator/icons/copy.svg</normaloff>:/plugins/coordinator/icons/copy.svg</iconset>
                  </property>
                 </widget>
@@ -1442,7 +1502,7 @@
                   <string>Copy Result to Clipboard</string>
                  </property>
                  <property name="icon">
-                  <iconset>
+                  <iconset resource="resources.qrc">
                    <normaloff>:/plugins/coordinator/icons/copy.svg</normaloff>:/plugins/coordinator/icons/copy.svg</iconset>
                  </property>
                 </widget>
@@ -1523,7 +1583,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resources.qrc">
                <normaloff>:/plugins/coordinator/icons/copy.svg</normaloff>:/plugins/coordinator/icons/copy.svg</iconset>
              </property>
              <property name="iconSize">
@@ -1617,7 +1677,6 @@
   <tabstop>resultLeft</tabstop>
   <tabstop>resultRight</tabstop>
  </tabstops>
- <resources/>
  <connections/>
  <buttongroups>
   <buttongroup name="inputFormatButtonGroup">

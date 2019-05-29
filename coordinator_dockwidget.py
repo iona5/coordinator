@@ -30,13 +30,14 @@ from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import Qt
 from PyQt5.Qt import pyqtSignal, QLocale, QApplication, QDoubleValidator, QIntValidator,\
     QKeyEvent, QScrollEvent, QWheelEvent, QPixmap, QIcon, QSize, QTimer, QEvent,\
-    QObject
+    QObject, QWebView, QUrl
 
 from qgis.core import QgsMessageLog, QgsCoordinateFormatter
 
 from .funcs import coordinatorDecimalToDms, coordinatorDmsStringsToDecimal,\
     coordinatorLog, CoordinatorTranslator as CT
 from PyQt5.QtWidgets import QLineEdit
+import pathlib
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'coordinator_dockwidget_base.ui'))
@@ -147,6 +148,7 @@ class CoordinatorDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         self.copyRight.clicked.connect(partial(self.copyResultToClipBoard,  CoordinatorDockWidget.SideRight))
         self.copyResultComplete.clicked.connect(partial(self.copyResultToClipBoard,  CoordinatorDockWidget.SideBoth))
         self.clearInput.clicked.connect(partial(self.resetInterface, self.SectionBoth))
+        self.showHelp.clicked.connect(self.showHelpButtonClicked)
 
     def _setToolsEnabled(self, enabled, section = None):
         if(section == None): section = self.SectionBoth
@@ -503,6 +505,18 @@ class CoordinatorDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
         cb.setText(content, mode=cb.Clipboard)
 
+    def showHelpButtonClicked(self):
+        
+        if not hasattr(self, "helpview"):
+            helpBasepath = "%s/help" % os.path.normpath(os.path.dirname(__file__))
+            helpUrl = QUrl(pathlib.Path("%s/index.html" % helpBasepath).as_uri())
+            cssUrl = QUrl(pathlib.Path("%s/help.css" % helpBasepath).as_uri())
+            self.helpview = QWebView()
+            self.helpview.settings().setUserStyleSheetUrl(cssUrl)
+            
+            self.helpview.load(helpUrl)
+
+        self.helpview.show()
 
     def closeEvent(self, event):
         self.closingPlugin.emit()

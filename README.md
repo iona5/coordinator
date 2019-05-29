@@ -2,7 +2,7 @@
 
 Coordinator is a Python plugin for the popular FOSS GIS application [QGIS](https://qgis.org).
 
-![Coordinator plugin screenshot](images/screen_main.png)
+![Coordinator plugin screenshot](help/images/screen_main.png)
 
 It's purpose of this plugin is to make handling of coordinate IO easier. It includes
 a Coordinate Reference System (CRS) transformation tool and supports creation of
@@ -54,7 +54,7 @@ start the Coordinator panel by selecting **Plugins** / **Open Coordinator** in t
 
 ### Basics
 
-![Basic functionality](images/screen_basics.png)
+![Basic functionality](help/images/screen_basics.png)
 
 Coordinators basic function is to just transforms input coordinates into output
 coordinates through a &mdash; you guessed it &mdash; coordinate transformation. The coordinator panel is structured
@@ -86,7 +86,7 @@ All the input can be cleared by pressing the corresponding button.
 
 #### Map Visualization
 
-![Maptools](images/screen_maptools.png)
+![Maptools](help/images/screen_maptools.png)
 
 The currently entered coordinate is marked on the main canvas with a circle. The marker can
 be hidden by toggling the corresponding button. If the coordinate is currently not within
@@ -97,7 +97,7 @@ map's scale is not changed.
 
 #### Coordinate Capture
 
-![Maptools](images/screen_capture.png)
+![Maptools](help/images/screen_capture.png)
 
 The input coordinate can be captured from the map canvas with the picker tool activated with the corresponding
 button. The input CRS does *not* have to be in the CRS of the map or currently active
@@ -105,7 +105,7 @@ layer.
 
 #### Copy Result to Clipboard
 
-![Copy Tools](images/screen_copy.png)
+![Copy Tools](help/images/screen_copy.png)
 
 The output of the transformation displayed in the lower section can be copied to the
 clipboard as a whole with the button to the right. In this case both coordinate components
@@ -116,7 +116,7 @@ value is copied to clipboard.
 
 #### Digitizing
 
-![Digitizing](images/screen_digitize.png)
+![Digitizing](help/images/screen_digitize.png)
 
 Coordinator provides ways to create features based on the currently entered coordinates. The
 corresponding button in the lower section is enabled when the user has a vector opened
@@ -135,7 +135,7 @@ as input.
 
 Note that neither CRS of the transformation needs to be in the layer's CRS.
 
-![demo capture with Polygon layer](images/capture.gif)
+![demo capture with Polygon layer](help/images/capture.gif)
 
 ## Advanced Usage
 

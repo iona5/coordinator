@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="/plugins/coordinator">
+    <file>icons/help.svg</file>
     <file>icons/warning.svg</file>
     <file>icons/addToCanvas.svg</file>
     <file>icons/capture.svg</file>
