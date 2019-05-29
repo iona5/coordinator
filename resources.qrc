@@ -5,13 +5,9 @@
     <file>icons/capture.svg</file>
     <file>icons/clear.svg</file>
     <file>icons/copy.svg</file>
-    <file>icons/delete.svg</file>
     <file>icons/locked.svg</file>
     <file>icons/marker.svg</file>
-    <file>icons/moveCanvas.svg</file>
     <file>icons/panMap.svg</file>
-    <file>icons/show.svg</file>
     <file>icons/unlocked.svg</file>
-    <file>icons/zoom.svg</file>
   </qresource>
 </RCC>
