@@ -11,6 +11,7 @@ pyrcc5 -o resources.py resources.qrc
 rm -rfv __pycache__ \
   .git* \
   scripts \
+  icons \
   README.md \
   i18n/af.ts \
   i18n/coordinator_de.ts \
