@@ -6,6 +6,10 @@ python:
 services: 
   - docker
 
+stages:
+  - name: test
+  - name: deploy
+
 install:
   - pip install pyqt5
   - pip install markdown2
@@ -20,3 +24,28 @@ script:
   - chmod +x build.sh docker_test_setup.sh travis_test.sh
   - ./build.sh coordinator
   - ./travis_test.sh ${QGIS_RELEASE}
+
+jobs:
+  include:
+    - stage: deploy
+      services:
+      env:
+        - QGIS_RELEASE=3_6
+      script:
+        - GIT_SHORT_HASH=$(git rev-parse --short HEAD)
+        - cd ..
+        - mv -v coordinator/scripts/build.sh .
+        - chmod +x build.sh
+        - ./build.sh coordinator
+        - export DEPLOY_FILENAME=coordinator_travis_${TRAVIS_TAG}_${GIT_SHORT_HASH}.zip
+        - echo ${DEPLOY_FILENAME}
+        - zip -rv ${DEPLOY_FILENAME} coordinator
+      deploy:
+        provider: releases
+        api_key: 
+          secure: ${ENCRYPTED_API_KEY}
+        file: ${DEPLOY_FILENAME}
+        skip_cleanup: true
+        draft: true
+        on:
+          tags: true 
