@@ -16,7 +16,7 @@ env:
   
 script:
   - cd ..
-  - mv coordinator/scripts/* .
+  - mv -v coordinator/scripts/{build.sh,docker_test_setup.sh,travis_test.sh} .
   - chmod +x build.sh docker_test_setup.sh travis_test.sh
   - ./build.sh coordinator
   - ./travis_test.sh ${QGIS_RELEASE}
