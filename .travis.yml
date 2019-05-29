@@ -37,13 +37,13 @@ jobs:
         - mv -v coordinator/scripts/build.sh .
         - chmod +x build.sh
         - ./build.sh coordinator
-        - export DEPLOY_FILENAME=coordinator_travis_${TRAVIS_TAG}_${GIT_SHORT_HASH}.zip
+        - export DEPLOY_FILENAME=coordinator-travis-${TRAVIS_TAG}-${GIT_SHORT_HASH}.zip
         - echo ${DEPLOY_FILENAME}
         - zip -rv ${DEPLOY_FILENAME} coordinator
       deploy:
         provider: releases
         api_key: 
-          secure: ${ENCRYPTED_API_KEY}
+          secure: "A6xUCV4q1uTd07MsEUVfk7a+G2Cw8YySSxWjsjdTrHTD7BI/X7G2y/cil7iS5Zjrx7j+tzSQeLdhXLp/IfIAp8lnoPu8YBYhZYb+SO+zAWS2duYDUqpGJABx7I4dMsIOIbyFmRczcc8sCPjKuv/88OJ0qiUFU+A7ZaZdd9UVsBOnZHK7u/fmP3kRx42FBLw6NmV9+IjGLI8IU6GDpOLvYMJTyYYCU7UVLyj60IrEuGAImiZ/zdVibjYKcf6uof23gNXiE1pUhYx+P+vgJePjbmOF+DbNHz1HSB4e8YRfPRdXRdYdDn7OCnh55vd+4dTYJAKPg716njGj4dds9DxQ66LuXYHnttLDpVC6Q4pjzK7laHdcAyofX3Dsh+bAdmZKr4ol4jPdw+V7byswpI4opNesqWPX3uLSa6SVgwkkcW11vK2YJAWllNrkdTz7dy/Hklt1LmhlSmhRdIYVexAfkmXT2d1ya6/8Ug6x877M4+xZGXRLPuDthaf8g6Y6ABAAmvlooo+LMvKQ2YSzu/V+2AOE9QYxT8ge5d3tK7pXHDIEeExolemLa9V+V//j27B2gvI/J95w8hQjXWEtP3/o6sIwkpDzBzl/ACKkC9UUEe6BnvzrNV2TKnFW/oQ5aStbTWtEyjpIQP8eG5kFbY/dY7M6M9QSr18vsYSSUayYGFc="
         file: ${DEPLOY_FILENAME}
         skip_cleanup: true
         draft: true
