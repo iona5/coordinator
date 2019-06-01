@@ -8,12 +8,14 @@ cd $BUILD_DIR
 bash scripts/build_help.sh
 
 pyrcc5 -o resources.py resources.qrc
-rm -rfv __pycache__ \
+rm -rf __pycache__ \
   .git* \
   scripts \
   icons \
   README.md \
   i18n/af.ts \
   i18n/coordinator_de.ts \
-  i18n/coordinator.pro
+  i18n/coordinator.pro \
+  .gitlab-ci.yml \
+  .travis.yml
 
