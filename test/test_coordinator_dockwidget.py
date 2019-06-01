@@ -24,10 +24,17 @@ from PyQt5.Qt import QLocale, Qt
 from coordinator.coordinator_dockwidget import CoordinatorDockWidget
 from coordinator.test.utilities import get_qgis_app, helperFormatCoordinates
 
-QGIS_APP, CANVAS, IFACE, PARENT = get_qgis_app()
-
 class CoordinatorDockWidgetTest(unittest.TestCase):
     """Test dockwidget works."""
+    
+    @classmethod
+    def setUpClass(cls):
+        super(CoordinatorDockWidgetTest, cls).setUpClass()
+        # some tests may have used objects and the C++ objects
+        # might have been deleted. lets make sure we have a clean 
+        # slate.
+        global QGIS_APP, CANVAS, IFACE, PARENT
+        QGIS_APP, CANVAS, IFACE, PARENT = get_qgis_app()
 
     def setUp(self):
         """Runs before each test."""

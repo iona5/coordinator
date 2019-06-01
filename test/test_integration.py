@@ -8,9 +8,17 @@ from PyQt5.QtTest import QTest
 from PyQt5 import QtCore
 from PyQt5.Qt import QLocale
 
-QGIS_APP, CANVAS, IFACE, PARENT = get_qgis_app()
-
 class CoordinatorIntegrationTest(unittest.TestCase):
+    
+    @classmethod
+    def setUpClass(cls):
+        super(CoordinatorIntegrationTest, cls).setUpClass()
+        # some tests may have used objects and the C++ objects
+        # might have been deleted. lets make sure we have a clean 
+        # slate.
+        global QGIS_APP, CANVAS, IFACE, PARENT
+        QGIS_APP, CANVAS, IFACE, PARENT = get_qgis_app()
+    
     def setUp(self):
         self.coordinator = Coordinator(IFACE)
         self.coordinator.run()
