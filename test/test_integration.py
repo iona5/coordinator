@@ -101,7 +101,40 @@ class CoordinatorIntegrationTest(unittest.TestCase):
         self.assertEqual(helperFormatCoordinates("0°2′0.000″N"), self.dw.resultRight.text())
         
         
+    def testTransformGeographicToGeodesic(self):
+        self.coordinator.setInputCrs(QgsCoordinateReferenceSystem("EPSG:4326"))
+        self.dw.outputCrsConn.setEnabled(False)
+        self.coordinator.setOutputCrs(QgsCoordinateReferenceSystem("EPSG:32633"))
         
+        QTest.keyClicks(self.dw.inLeft, "14")
+        QTest.keyClicks(self.dw.inLeftMin, "30")
+        QTest.keyClicks(self.dw.inLeftSec, "45")
+        QTest.keyClicks(self.dw.inRight, "45")
+        QTest.keyClicks(self.dw.inRightMin, "10")
+        QTest.keyClicks(self.dw.inRightSec, "5")
+
+        self.assertEqual(helperFormatCoordinates("461,690.03"), self.dw.resultLeft.text())
+        self.assertEqual(helperFormatCoordinates("5,001,735.10"), self.dw.resultRight.text())
+        
+        self.coordinator.setOutputCrs(QgsCoordinateReferenceSystem("EPSG:32632"))
+        self.assertEqual(helperFormatCoordinates("933,193.62"), self.dw.resultLeft.text())
+        self.assertEqual(helperFormatCoordinates("5,016,421.01"), self.dw.resultRight.text())
+        
+        
+    def testTransformGeodesicToGeographic(self):
+        self.coordinator.setInputCrs(QgsCoordinateReferenceSystem("EPSG:32633"))
+        self.dw.outputCrsConn.setEnabled(False)
+        self.coordinator.setOutputCrs(QgsCoordinateReferenceSystem("EPSG:4326"))
+        
+        QTest.keyClicks(self.dw.inLeftDec, "560000")
+        QTest.keyClicks(self.dw.inRightDec, "5400000")
+        self.assertEqual(helperFormatCoordinates("15°48′58.480″E"), self.dw.resultLeft.text())
+        self.assertEqual(helperFormatCoordinates("48°45′0.440″N"), self.dw.resultRight.text())
+        
+        QTest.mouseClick(self.dw.resultAsDec, QtCore.Qt.LeftButton)
+        self.assertEqual(helperFormatCoordinates("15.816244426°E"), self.dw.resultLeft.text())
+        self.assertEqual(helperFormatCoordinates("48.750122268°N"), self.dw.resultRight.text())
+
 
     def testSwitchHemispheres(self):
         crsIn = QgsCoordinateReferenceSystem("EPSG:4326")
