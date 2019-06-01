@@ -4,9 +4,10 @@
 import sys
 import logging
 from PyQt5.QtWidgets import QWidget
-from PyQt5.Qt import QMainWindow, QDialog, QWindow
+from PyQt5.Qt import QMainWindow, QDialog, QWindow, QLocale
 from time import sleep
 from qgis._core import QgsCoordinateReferenceSystem
+from qgis.PyQt import sip
 
 
 LOGGER = logging.getLogger('QGIS')
@@ -35,12 +36,13 @@ def get_qgis_app():
         print("Failed to import QGIS libs %s"  % error)
         return None, None, None, None
 
-    global QGIS_APP  # pylint: disable=W0603
-
-
-
+    global CANVAS
+    forceReinit = ( CANVAS != None and sip.isdeleted(CANVAS) )
     
-    if QGIS_APP is None:
+
+    global QGIS_APP  # pylint: disable=W0603
+    
+    if QGIS_APP is None or forceReinit:
         gui_flag = True  # All test will run qgis in gui mode
         #noinspection PyPep8Naming    
         
@@ -58,23 +60,36 @@ def get_qgis_app():
         
 
     global PARENT  # pylint: disable=W0603
-    if PARENT is None:
+    if PARENT is None or forceReinit:
         
         #noinspection PyPep8Naming
         PARENT = QWidget()
 
 
-    global CANVAS  # pylint: disable=W0603
-    if CANVAS is None:
+    #global CANVAS  # pylint: disable=W0603
+    if CANVAS is None or forceReinit:
         #noinspection PyPep8Naming
         CANVAS = QgsMapCanvas(PARENT)
         CANVAS.resize(QtCore.QSize(400, 400))
         CANVAS.setDestinationCrs(QgsCoordinateReferenceSystem("EPSG:4326"))
 
     global IFACE  # pylint: disable=W0603
-    if IFACE is None:
+    if IFACE is None or forceReinit:
         # QgisInterface is a stub implementation of the QGIS plugin interface
         #noinspection PyPep8Naming
         IFACE = QgisInterface(CANVAS)
     
     return QGIS_APP, CANVAS, IFACE, PARENT
+
+
+DEC_POINT = QLocale().decimalPoint()
+GROUP_SEPARATOR = QLocale().groupSeparator()
+TRANSLATION = str.maketrans(".,", "%s%s" % (DEC_POINT, GROUP_SEPARATOR) )
+
+def helperFormatCoordinates(coordinate):
+    # if the locale does not use grouping, we need to remove the grouping
+    # separator before translation:
+    if QLocale.OmitGroupSeparator & QLocale().numberOptions():
+        coordinate = coordinate.replace(",", "")
+    return coordinate.translate(TRANSLATION)
+
