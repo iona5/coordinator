@@ -10,3 +10,4 @@ __pycache__/
 .coverage
 .noseids
 help/index.html
+*.aux.xml
