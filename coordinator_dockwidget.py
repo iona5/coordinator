@@ -343,6 +343,7 @@ class CoordinatorDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
     def hideMessages(self):
         self.messageIcon.clear()
+        self.messageIcon.hide()
         self.messageText.clear()
 
     def clearFieldsInSection(self, section):
