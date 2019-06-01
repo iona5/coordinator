@@ -150,7 +150,7 @@ the "up"-arrow or by scrolling up while that field is active.
 Pressing '-' (minus-key) in an input field switches the hemisphere of the coordinate
 if the current input CRS is a geographic one.
 
-#### Keyboard Digitize
+### Keyboard Digitize
 
 Pressing Enter/Return in any input field performs a coordinate digitization if currently
 possible. It's therefore possible to digitize a bunch of coordinates manually, for example
