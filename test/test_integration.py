@@ -52,8 +52,9 @@ class CoordinatorIntegrationTest(unittest.TestCase):
         
         CANVAS.setDestinationCrs(QgsCoordinateReferenceSystem(currentCanvasCrs))
         self.assertEqual(currentCanvasCrs, self.coordinator._canvasTransform.destinationCrs())
+        
     
-    def testCanvasLock(self):
+    def testLayerLock(self):
         outputCrs = self.coordinator._outputCrs
         
         newCrs = QgsCoordinateReferenceSystem("EPSG:32615")
@@ -69,8 +70,7 @@ class CoordinatorIntegrationTest(unittest.TestCase):
         QTest.qWait(100)
         # Simulate a click, but nothing should happen
         QTest.mouseClick(self.dw.outputCrs, QtCore.Qt.LeftButton)
-
-        
+         
         
     def testTransformIdentity(self):
         
