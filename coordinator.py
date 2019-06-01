@@ -26,7 +26,7 @@ import os.path
 
 from PyQt5.Qt import Qt, QSettings, QTranslator, qVersion, QApplication, QCoreApplication, QIcon, QColor,\
     QMouseEvent, QEvent, QLocale
-from PyQt5.QtWidgets import QAction
+from PyQt5.QtWidgets import QAction, QMainWindow
 from PyQt5 import QtCore
 
 from qgis.gui import QgsProjectionSelectionDialog, QgsVertexMarker, QgsMapToolEmitPoint, QgsMapTool, \
@@ -42,7 +42,7 @@ from .funcs import coordinatorLog, CoordinatorTranslator as CT
 class Coordinator():
     """YACUP plugin"""
 
-    def __init__(self, iface):
+    def __init__(self, iface, mainWindow = None):
         """Constructor.
 
         :param iface: An interface instance that will be passed to this class
@@ -54,7 +54,9 @@ class Coordinator():
         self.iface = iface
         self.canvas = iface.mapCanvas()
         self._project = QgsProject.instance()
-
+            
+        self._uiHook = mainWindow if isinstance(mainWindow, QMainWindow) else iface
+        
         # region: LOCALE - UNUSED
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
@@ -492,5 +494,5 @@ class Coordinator():
 
             # show the dockwidget
             # TODO: fix to allow choice of dock location
-            self.iface.addDockWidget(Qt.LeftDockWidgetArea, self.dockwidget)
+            self._uiHook.addDockWidget(Qt.LeftDockWidgetArea, self.dockwidget)
             self.dockwidget.show()
