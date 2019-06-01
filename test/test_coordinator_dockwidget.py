@@ -22,10 +22,9 @@ from PyQt5.QtWidgets  import QDockWidget
 from PyQt5.Qt import QLocale, Qt
 
 from coordinator.coordinator_dockwidget import CoordinatorDockWidget
-from coordinator.test.utilities import get_qgis_app
+from coordinator.test.utilities import get_qgis_app, helperFormatCoordinates
 
 QGIS_APP, CANVAS, IFACE, PARENT = get_qgis_app()
-DEC_POINT = QLocale().decimalPoint()
 
 class CoordinatorDockWidgetTest(unittest.TestCase):
     """Test dockwidget works."""
@@ -102,9 +101,9 @@ class CoordinatorDockWidgetTest(unittest.TestCase):
  
         self.assertEqual("", self.dw.inLeftSec.text())
         QTest.keyClick(self.dw.inLeftSec, QtCore.Qt.Key_Up)
-        self.assertEqual("1%s000" % DEC_POINT, self.dw.inLeftSec.text())
+        self.assertEqual(helperFormatCoordinates("1.000"), self.dw.inLeftSec.text())
         QTest.keyClick(self.dw.inLeftSec, QtCore.Qt.Key_Down)
-        self.assertEqual("0%s000" % DEC_POINT, self.dw.inLeftSec.text())
+        self.assertEqual(helperFormatCoordinates("0.000"), self.dw.inLeftSec.text())
   
         self.dw.setInputToDMS(False)
  
@@ -113,11 +112,11 @@ class CoordinatorDockWidgetTest(unittest.TestCase):
         self.assertTrue(self.dw.inLeftDec.isVisible())
         self.assertTrue(self.dw.inLeftDec.isEnabled())
  
-        self.assertEqual("0%s000000000" % DEC_POINT, self.dw.inLeftDec.text())
+        self.assertEqual(helperFormatCoordinates("0.000000000"), self.dw.inLeftDec.text())
         QTest.keyClick(self.dw.inLeftDec, QtCore.Qt.Key_Up)
-        self.assertEqual("1%s00000000" % DEC_POINT, self.dw.inLeftDec.text())
+        self.assertEqual(helperFormatCoordinates("1.00000000"), self.dw.inLeftDec.text())
         QTest.keyClick(self.dw.inLeftDec, QtCore.Qt.Key_Down)
-        self.assertEqual("0%s00000000" % DEC_POINT, self.dw.inLeftDec.text())
+        self.assertEqual(helperFormatCoordinates("0.00000000"), self.dw.inLeftDec.text())
 
     def testIncrementorOverflowDms(self):
         QTest.keyClicks(self.dw.inLeftMin, "59" )
@@ -131,7 +130,7 @@ class CoordinatorDockWidgetTest(unittest.TestCase):
         self.assertEqual("0", self.dw.inLeft.text())
         
         QTest.keyClick(self.dw.inLeftSec, QtCore.Qt.Key_Up )
-        self.assertEqual("0%s000" % DEC_POINT, self.dw.inLeftSec.text())
+        self.assertEqual(helperFormatCoordinates("0.000"), self.dw.inLeftSec.text())
         self.assertEqual("0", self.dw.inLeftMin.text())
         self.assertEqual("1", self.dw.inLeft.text())
     
@@ -159,7 +158,7 @@ class CoordinatorDockWidgetTest(unittest.TestCase):
         QTest.keyClicks(self.dw.inLeftMin, "1" )
         self.assertEqual("180", self.dw.inLeft.text())
         self.assertEqual("0", self.dw.inLeftMin.text())
-        self.assertEqual("180%s000000000" % DEC_POINT, self.dw.inLeftDec.text())     
+        self.assertEqual(helperFormatCoordinates("180.000000000"), self.dw.inLeftDec.text())     
         
     def testIncrementorClampMaxByIncrementor(self):
         QTest.keyClicks(self.dw.inLeft, "179" )
@@ -167,12 +166,12 @@ class CoordinatorDockWidgetTest(unittest.TestCase):
         QTest.keyClick(self.dw.inLeftMin, QtCore.Qt.Key_Up )
         self.assertEqual("180", self.dw.inLeft.text())
         self.assertEqual("0", self.dw.inLeftMin.text())
-        self.assertEqual("180%s000000000" % DEC_POINT, self.dw.inLeftDec.text())
+        self.assertEqual(helperFormatCoordinates("180.000000000"), self.dw.inLeftDec.text())
         
         QTest.keyClick(self.dw.inLeftMin, QtCore.Qt.Key_Up )
         self.assertEqual("180", self.dw.inLeft.text())
         self.assertEqual("0", self.dw.inLeftMin.text())
-        self.assertEqual("180%s000000000" % DEC_POINT, self.dw.inLeftDec.text())
+        self.assertEqual(helperFormatCoordinates("180.000000000"), self.dw.inLeftDec.text())
     
     def testIncrementorAtMaximumMin(self):
         QTest.keyClicks(self.dw.inLeft, "180" )
@@ -187,7 +186,7 @@ class CoordinatorDockWidgetTest(unittest.TestCase):
         QTest.keyClick(self.dw.inLeftSec, QtCore.Qt.Key_Down )
         self.assertEqual("179", self.dw.inLeft.text())
         self.assertEqual("59", self.dw.inLeftMin.text())
-        self.assertEqual("59%s000"  % DEC_POINT, self.dw.inLeftSec.text())
+        self.assertEqual(helperFormatCoordinates("59.000"), self.dw.inLeftSec.text())
     
     def testIncrementorAtMinimumMin(self):
         QTest.keyClick(self.dw.inLeftMin, QtCore.Qt.Key_Down )

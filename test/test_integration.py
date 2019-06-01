@@ -1,7 +1,7 @@
 import unittest
 import qgis
 
-from coordinator.test.utilities import get_qgis_app
+from coordinator.test.utilities import get_qgis_app, helperFormatCoordinates
 from coordinator.coordinator import Coordinator
 from qgis._core import QgsCoordinateReferenceSystem
 from PyQt5.QtTest import QTest
@@ -9,8 +9,6 @@ from PyQt5 import QtCore
 from PyQt5.Qt import QLocale
 
 QGIS_APP, CANVAS, IFACE, PARENT = get_qgis_app()
-
-DEC_POINT = QLocale().decimalPoint()
 
 class CoordinatorIntegrationTest(unittest.TestCase):
     def setUp(self):
@@ -82,17 +80,19 @@ class CoordinatorIntegrationTest(unittest.TestCase):
         self.coordinator.setOutputCrs(crsOut)
         
         QTest.keyPress(self.dw.inLeft, "2")
-        self.assertEqual("2°0′0%s000″E" % DEC_POINT, self.dw.resultLeft.text())
-        self.assertEqual("0°0′0%s000″" % DEC_POINT, self.dw.resultRight.text())
+        self.assertEqual(helperFormatCoordinates("2°0′0.000″E"), self.dw.resultLeft.text())
+        self.assertEqual(helperFormatCoordinates("0°0′0.000″"), self.dw.resultRight.text())
 
         QTest.keyPress(self.dw.inLeft, "3")
-        self.assertEqual("23°0′0%s000″E" % DEC_POINT, self.dw.resultLeft.text())
-        self.assertEqual("0°0′0%s000″" % DEC_POINT, self.dw.resultRight.text())
+        self.assertEqual(helperFormatCoordinates("23°0′0.000″E"), self.dw.resultLeft.text())
+        self.assertEqual(helperFormatCoordinates("0°0′0.000″"), self.dw.resultRight.text())
 
         
         QTest.keyPress(self.dw.inRightMin, "2")
-        self.assertEqual("23°0′0%s000″E" % DEC_POINT, self.dw.resultLeft.text())
-        self.assertEqual("0°2′0%s000″N" % DEC_POINT, self.dw.resultRight.text())
+        self.assertEqual(helperFormatCoordinates("23°0′0.000″E"), self.dw.resultLeft.text())
+        self.assertEqual(helperFormatCoordinates("0°2′0.000″N"), self.dw.resultRight.text())
+        
+        
         
 
     def testSwitchHemispheres(self):
@@ -114,26 +114,26 @@ class CoordinatorIntegrationTest(unittest.TestCase):
         self.dw.inRightMin.insert("10")
         self.dw.inRightSec.insert("45")
         
-        self.assertEqual("10°5′1%s000″E" % DEC_POINT, self.dw.resultLeft.text())
-        self.assertEqual("5°10′45%s000″N" % DEC_POINT, self.dw.resultRight.text())
+        self.assertEqual(helperFormatCoordinates("10°5′1.000″E"), self.dw.resultLeft.text())
+        self.assertEqual(helperFormatCoordinates("5°10′45.000″N"), self.dw.resultRight.text())
         
         QTest.mouseClick(self.dw.leftDirButton, QtCore.Qt.LeftButton)
         self.assertEqual("W", self.dw.leftDirButton.text())
         self.assertEqual("N", self.dw.rightDirButton.text())
-        self.assertEqual("10°5′1%s000″W" % DEC_POINT, self.dw.resultLeft.text())
-        self.assertEqual("5°10′45%s000″N" % DEC_POINT, self.dw.resultRight.text())
+        self.assertEqual(helperFormatCoordinates("10°5′1.000″W"), self.dw.resultLeft.text())
+        self.assertEqual(helperFormatCoordinates("5°10′45.000″N"), self.dw.resultRight.text())
         
         QTest.mouseClick(self.dw.rightDirButton, QtCore.Qt.LeftButton)
         self.assertEqual("W", self.dw.leftDirButton.text())
         self.assertEqual("S", self.dw.rightDirButton.text())
-        self.assertEqual("10°5′1%s000″W" % DEC_POINT, self.dw.resultLeft.text())
-        self.assertEqual("5°10′45%s000″S" % DEC_POINT, self.dw.resultRight.text())
+        self.assertEqual(helperFormatCoordinates("10°5′1.000″W"), self.dw.resultLeft.text())
+        self.assertEqual(helperFormatCoordinates("5°10′45.000″S"), self.dw.resultRight.text())
 
         QTest.mouseClick(self.dw.rightDirButton, QtCore.Qt.LeftButton)
         self.assertEqual("W", self.dw.leftDirButton.text())
         self.assertEqual("N", self.dw.rightDirButton.text())
-        self.assertEqual("10°5′1%s000″W" % DEC_POINT, self.dw.resultLeft.text())
-        self.assertEqual("5°10′45%s000″N" % DEC_POINT, self.dw.resultRight.text())
+        self.assertEqual(helperFormatCoordinates("10°5′1.000″W"), self.dw.resultLeft.text())
+        self.assertEqual(helperFormatCoordinates("5°10′45.000″N"), self.dw.resultRight.text())
         
     
     def testGeographicInputDisplay(self):
@@ -169,8 +169,8 @@ class CoordinatorIntegrationTest(unittest.TestCase):
         self.dw.inRightSec.insert("45")
         
         QTest.mouseClick(self.dw.inputAsDec, QtCore.Qt.LeftButton)
-        self.assertEqual("10%s083611111" % DEC_POINT,self.dw.inLeftDec.text())
-        self.assertEqual("5%s179166667" % DEC_POINT,self.dw.inRightDec.text())
+        self.assertEqual(helperFormatCoordinates("10.083611111"),self.dw.inLeftDec.text())
+        self.assertEqual(helperFormatCoordinates("5.179166667"),self.dw.inRightDec.text())
         
 if __name__ == "__main__":
     suite = unittest.makeSuite(CoordinatorIntegrationTest)

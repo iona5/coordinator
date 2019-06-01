@@ -4,7 +4,7 @@
 import sys
 import logging
 from PyQt5.QtWidgets import QWidget
-from PyQt5.Qt import QMainWindow, QDialog, QWindow
+from PyQt5.Qt import QMainWindow, QDialog, QWindow, QLocale
 from time import sleep
 from qgis._core import QgsCoordinateReferenceSystem
 
@@ -78,3 +78,16 @@ def get_qgis_app():
         IFACE = QgisInterface(CANVAS)
     
     return QGIS_APP, CANVAS, IFACE, PARENT
+
+
+DEC_POINT = QLocale().decimalPoint()
+GROUP_SEPARATOR = QLocale().groupSeparator()
+TRANSLATION = str.maketrans(".,", "%s%s" % (DEC_POINT, GROUP_SEPARATOR) )
+
+def helperFormatCoordinates(coordinate):
+    # if the locale does not use grouping, we need to remove the grouping
+    # separator before translation:
+    if QLocale.OmitGroupSeparator & QLocale().numberOptions():
+        coordinate = coordinate.replace(",", "")
+    return coordinate.translate(TRANSLATION)
+
