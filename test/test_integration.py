@@ -16,8 +16,8 @@ class CoordinatorIntegrationTest(unittest.TestCase):
         # some tests may have used objects and the C++ objects
         # might have been deleted. lets make sure we have a clean 
         # slate.
-        global QGIS_APP, CANVAS, IFACE, PARENT
-        QGIS_APP, CANVAS, IFACE, PARENT = get_qgis_app()
+        global CANVAS, IFACE
+        QGIS_APP, IFACE, CANVAS = get_qgis_app()
     
     def setUp(self):
         self.coordinator = Coordinator(IFACE)

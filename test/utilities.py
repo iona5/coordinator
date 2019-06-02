@@ -31,55 +31,40 @@ def get_qgis_app():
         from PyQt5 import QtGui, QtCore
         from qgis.core import QgsApplication
         from qgis.gui import QgsMapCanvas
-        from .qgis_interface import QgisInterface
+        import qgis.utils
+        from .qgis_interface import QgisStubInterface
     except ImportError as error:
         print("Failed to import QGIS libs %s"  % error)
-        return None, None, None, None
-
-    global CANVAS
-    forceReinit = ( CANVAS != None and sip.isdeleted(CANVAS) )
+        return None, None, None
+   
+    global QGIS_APP, IFACE, CANVAS, PARENT
     
-
-    global QGIS_APP  # pylint: disable=W0603
+    if CANVAS and sip.isdeleted(CANVAS):
+        CANVAS = None
+        IFACE = None
     
-    if QGIS_APP is None or forceReinit:
-        gui_flag = True  # All test will run qgis in gui mode
-        #noinspection PyPep8Naming    
-        
-        try:
-            sysargsUtf8 = [sysarg.encode("utf-8") for sysarg in sys.argv]
-        except AttributeError:
-            sysargsUtf8 = []
-
-        QGIS_APP = QgsApplication(sysargsUtf8, gui_flag)
-
-        # Make sure QGIS_PREFIX_PATH is set in your env if needed!
-        QGIS_APP.initQgis()
-        s = QGIS_APP.showSettings()
-        LOGGER.debug(s)
-        
-
-    global PARENT  # pylint: disable=W0603
-    if PARENT is None or forceReinit:
-        
-        #noinspection PyPep8Naming
-        PARENT = QWidget()
-
-
-    #global CANVAS  # pylint: disable=W0603
-    if CANVAS is None or forceReinit:
-        #noinspection PyPep8Naming
-        CANVAS = QgsMapCanvas(PARENT)
-        CANVAS.resize(QtCore.QSize(400, 400))
-        CANVAS.setDestinationCrs(QgsCoordinateReferenceSystem("EPSG:4326"))
-
-    global IFACE  # pylint: disable=W0603
-    if IFACE is None or forceReinit:
-        # QgisInterface is a stub implementation of the QGIS plugin interface
-        #noinspection PyPep8Naming
-        IFACE = QgisInterface(CANVAS)
+    if not IFACE or not CANVAS:
+        if qgis.utils.iface:
+            # we are probably running in the QGIS Applications Python console.
+            # so we have all we need:
+            IFACE = qgis.utils.iface
+            CANVAS = IFACE.mapCanvas()
+            QGIS_APP = QgsApplication.instance()
+            PARENT = CANVAS.parentWidget()
+        else:            
+            try:
+                sysargsUtf8 = [sysarg.encode("utf-8") for sysarg in sys.argv]
+            except AttributeError:
+                sysargsUtf8 = []
+            QGIS_APP = QgsApplication(sysargsUtf8, True)
+            QGIS_APP.initQgis()
+            PARENT = QWidget()
+            CANVAS = QgsMapCanvas(PARENT)
+            CANVAS.resize(QtCore.QSize(400, 400))
+            CANVAS.setDestinationCrs(QgsCoordinateReferenceSystem("EPSG:4326"))
+            IFACE = QgisStubInterface(CANVAS)
     
-    return QGIS_APP, CANVAS, IFACE, PARENT
+    return QGIS_APP, IFACE, CANVAS
 
 
 DEC_POINT = QLocale().decimalPoint()

@@ -21,7 +21,7 @@ from qgis.core import (
     QgsRasterLayer)
 
 from coordinator.test.utilities import get_qgis_app
-QGIS_APP = get_qgis_app()
+QGIS_APP, IFACE, CANVAS = get_qgis_app()
 
 class QGISTest(unittest.TestCase):
     """Test the QGIS Environment"""

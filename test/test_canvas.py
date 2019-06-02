@@ -14,20 +14,30 @@ from PyQt5 import QtCore
 class CoordinatorCanvasTest(unittest.TestCase):
     def setUp(self):
         
-        global QGIS_APP, CANVAS, IFACE, PARENT
-        QGIS_APP, CANVAS, IFACE, PARENT = get_qgis_app()
-        self.window = QMainWindow()
-        self.window.resize(QSize(800,400))
-        self.window.setCentralWidget(CANVAS)
+        global CANVAS, IFACE
+        QGIS_APP, IFACE, CANVAS = get_qgis_app()
+        
+        if isinstance(IFACE, QgisStubInterface):
+            self.window = QMainWindow()
+            self.window.resize(QSize(800,400))
+            self.window.setCentralWidget(CANVAS)
+        else:
+            self.window = None
+        
         
         self.coordinator = Coordinator(IFACE, self.window)
         self.coordinator.run()
         self.dw = self.coordinator.dockwidget
         
-        self.window.show()
+        if self.window:
+            self.window.show()
 
     def tearDown(self):
-        self.window.close()
+        QTest.qWait(200)
+        try:
+            self.window.close()
+        except:
+            pass
         
     def testMarkerGeographicOnGeodesic(self):
         CANVAS.setDestinationCrs(QgsCoordinateReferenceSystem("EPSG:32632"))

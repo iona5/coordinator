@@ -18,7 +18,7 @@ import os
 
 from PyQt5.QtCore import QCoreApplication, QTranslator
 
-QGIS_APP = get_qgis_app()
+QGIS_APP, IFACE, CANVAS = get_qgis_app()
 
 
 class SafeTranslationsTest(unittest.TestCase):
