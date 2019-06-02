@@ -9,6 +9,7 @@ from PyQt5.Qt import Qt, QSize
 import os
 from qgis.core import QgsProject, QgsVectorLayer, QgsCoordinateReferenceSystem, QgsRectangle, QgsPointXY
 from PyQt5 import QtCore
+from coordinator.test.qgis_interface import QgisStubInterface
 
 
 class CoordinatorCanvasTest(unittest.TestCase):
@@ -31,8 +32,15 @@ class CoordinatorCanvasTest(unittest.TestCase):
         
         if self.window:
             self.window.show()
+            
+        self.project = QgsProject.instance()
+        self.project.addMapLayer(QgsVectorLayer(os.path.join(os.path.dirname(__file__), "europe.geojson" ), "europe", "ogr"), True)
+        #
+
 
     def tearDown(self):
+        self.project.clear()
+        self.dw.close()
         QTest.qWait(200)
         try:
             self.window.close()
@@ -41,10 +49,9 @@ class CoordinatorCanvasTest(unittest.TestCase):
         
     def testMarkerGeographicOnGeodesic(self):
         CANVAS.setDestinationCrs(QgsCoordinateReferenceSystem("EPSG:32632"))
-        project = QgsProject.instance()
-        project.addMapLayer(QgsVectorLayer(os.path.join(os.path.dirname(__file__), "data/europe.geojson" ), "europe", "ogr"), True)
-        #
+        QTest.qWait(100)
         CANVAS.zoomToFeatureExtent(QgsRectangle(150000, 4800000, 850000, 5500000 ))
+        QTest.qWait(100)
         
         QTest.mouseClick(self.dw.inputAsDec, Qt.LeftButton)
         
