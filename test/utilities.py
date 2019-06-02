@@ -6,7 +6,7 @@ import logging
 from PyQt5.QtWidgets import QWidget
 from PyQt5.Qt import QMainWindow, QDialog, QWindow, QLocale
 from time import sleep
-from qgis._core import QgsCoordinateReferenceSystem
+from qgis.core import QgsCoordinateReferenceSystem
 from qgis.PyQt import sip
 
 
