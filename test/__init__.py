@@ -11,4 +11,7 @@ def run_all():
     runner = unittest.TextTestRunner(verbosity = 3, stream=sys.stdout)
     runner.run(suite)
     
+class CoordinatorTestCase(unittest.TestCase):
+  def __init__(self):
+    super(CoordinatorTestCase, self).__init__()
 
