@@ -12,12 +12,12 @@ QGIS project.
 
 This plugin overlaps in different ways with the purpose of the plugins Coordinate Capture,
 Lat Lon Tools and the Advanced Digitize Panel. It however aims to integrate multiple tasks
-these tools are sometimes used together in a clean and simple interface. And yes...:
+these tools may be used together in a clean and simple interface. And yes...:
 It's almost as it's just another coordinate tool. :)
 
 The two main functions of this plugin are:
 
-1. a simple and easy to use coordinate transformation within the QGIS interface and
+1. a simple and easy to use coordinate transformation tool within the QGIS interface and
 2. a quick to use coordinate digitizer with support for coordinates in an arbitrary
    CRS independent of project or layer CRS.
 
@@ -30,9 +30,9 @@ It needs to be emphasized that this tool does not implement all the functionalit
 mentioned plugins. These are probably better suited if more advanced tasks are performed.
 Coordinator however may be still of support.
 
-* Coordinator almost completely reproduces the functionality of the
-  [**Coordinate Capture** Core plugin](https://docs.qgis.org/testing/en/docs/user_manual/plugins/plugins_coordinate_capture.html) while
-  dropping the mouse tracking feature.
+* Coordinator is an improvement upon the
+  [**Coordinate Capture** Core plugin](https://docs.qgis.org/testing/en/docs/user_manual/plugins/plugins_coordinate_capture.html)
+  as it allows for Degree/Minute/Seconds display and output
 * For feature creation Coordinator is a complement to the
   [**Advanced Digitizing Panel**](https://docs.qgis.org/testing/en/docs/user_manual/working_with_vector/editing_geometry_attributes.html?highlight=advanced%20digitizing#the-advanced-digitizing-panel).
   If the coordinates
@@ -56,7 +56,7 @@ start the Coordinator panel by selecting **Plugins** / **Open Coordinator** in t
 
 ![Basic functionality](help/images/screen_basics.png)
 
-Coordinators basic function is to just transforms input coordinates into output
+Coordinators basic function is to just transform input coordinates into output
 coordinates through a &mdash; you guessed it &mdash; coordinate transformation. The coordinator panel is structured
 in two sections: The upper section represents the input, the lower the output of the
 current coordinate transformation.
