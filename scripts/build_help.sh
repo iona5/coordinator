@@ -19,3 +19,5 @@ echo '<h2 id="help-links">Links</h2>
 <li><a href="https://github.com/iona5/coordinator">Github page</a></li>
 <li><a href="https://github.com/iona5/coordinator/issues">Bug Reports</a></li>
 </ul>' >> help/index.html
+
+echo "<p style='font-size: 8pt; font-style: italic; text-align: right'>git commit: $(git rev-parse --short HEAD 2>/dev/null)</p>" >> help/index.html
