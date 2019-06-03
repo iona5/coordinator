@@ -156,6 +156,29 @@ Pressing Enter/Return in any input field performs a coordinate digitization if c
 possible. It's therefore possible to digitize a bunch of coordinates manually, for example
 when reading from unstructured coordinate lists.
 
+## Tests
+
+Tests can be run with the QGIS python console or in a terminal with the appropriate environment ( e.g. PYTHONPATH, QT plugin path, 
+QGIS_PREFIX_PATH ...).
+
+* to execute **inside QGIS**, open Plugins -> Python console... and enter
+~~~ 
+import coordinator.test
+coordinator.test.run_all()
+~~~
+
+* to execute **in a terminal** make sure the  environment variables are set correctly:
+    - `PATH` (should prefer the QGIS installation binaries, especially python)
+    - `QGIS_PREFIX_PATH` (usually `<QGIS installation path>/apps/qgis`)
+    - `QT_PLUGIN_PATH`: `QGIS_PREFIX_PATH` + `/../Qt5/plugins`
+    - `PYTHONPATH` (usually `QGIS_PREFIX_PATH` + `/python` and + `/../Qt5/python` and the 
+QGIS profile plugin folder )
+
+  then execute
+~~~
+python -m coordinator.test
+~~~
+
 ## Known Issues / Limitations / Planned Features
 
 * This plugin is not really tested for visuals on Linux desktops
