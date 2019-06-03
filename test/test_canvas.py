@@ -32,7 +32,7 @@ class CoordinatorCanvasTest(unittest.TestCase):
     def testMarkerGeographicOnGeodesic(self):
         CANVAS.setDestinationCrs(QgsCoordinateReferenceSystem("EPSG:32632"))
         project = QgsProject.instance()
-        project.addMapLayer(QgsVectorLayer(os.path.join(os.path.dirname(__file__), "europe.geojson" ), "europe", "ogr"), True)
+        project.addMapLayer(QgsVectorLayer(os.path.join(os.path.dirname(__file__), "data/europe.geojson" ), "europe", "ogr"), True)
         #
         CANVAS.zoomToFeatureExtent(QgsRectangle(150000, 4800000, 850000, 5500000 ))
         
