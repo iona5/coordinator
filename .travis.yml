@@ -17,6 +17,7 @@ install:
 env:
   - QGIS_RELEASE=3_4
   - QGIS_RELEASE=3_6
+  - QGIS_RELEASE=3_8
   
 script:
   - cd ..

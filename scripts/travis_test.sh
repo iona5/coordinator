@@ -3,7 +3,11 @@
 set +ex
 if [ -z $1 ] ; then QGIS_RELEASE=$1 ; fi
 
-docker run -d --name qgis-${QGIS_RELEASE} -e DISPLAY=:99 qgis/qgis:release-${QGIS_RELEASE}
+DOCKER_TAG=release-${QGIS_RELEASE}
+
+if [ ${QGIS_RELEASE} = 3_8 ]; then DOCKER_TAG=final-3_8_0 ; fi
+
+docker run -d --name qgis-${QGIS_RELEASE} -e DISPLAY=:99 qgis/qgis:${DOCKER_TAG}
 ./docker_test_setup.sh qgis-${QGIS_RELEASE}
 sleep 2
 docker exec -t qgis-${QGIS_RELEASE} sh -c "qgis_testrunner.sh coordinator.test.run_all"
