@@ -55,7 +55,7 @@ run-tests-38:
   script:
     - docker run -d --name qgis-38 -e DISPLAY=:99 qgis/qgis:final-3_8_0
     - sleep 2
-    - /bin/bash scripts/docker_test_setup.sh qgis-36
+    - /bin/bash scripts/docker_test_setup.sh qgis-38
     - docker exec -t qgis-38 sh -c "qgis_testrunner.sh coordinator.test.run_all"
   after_script:
     - docker stop qgis-38
