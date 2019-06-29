@@ -3,7 +3,7 @@ import qgis
 
 from coordinator.test.utilities import get_qgis_app, helperFormatCoordinates
 from coordinator.coordinator import Coordinator
-from qgis._core import QgsCoordinateReferenceSystem
+from qgis._core import QgsCoordinateReferenceSystem, QgsPointXY
 from PyQt5.QtTest import QTest
 from PyQt5 import QtCore
 from PyQt5.Qt import QLocale
@@ -212,6 +212,34 @@ class CoordinatorIntegrationTest(unittest.TestCase):
         QTest.mouseClick(self.dw.inputAsDec, QtCore.Qt.LeftButton)
         self.assertEqual(helperFormatCoordinates("10.083611111"),self.dw.inLeftDec.text())
         self.assertEqual(helperFormatCoordinates("5.179166667"),self.dw.inRightDec.text())
+        
+    def testInputInDecimalMode(self):
+        QTest.mouseClick(self.dw.inputAsDec, QtCore.Qt.LeftButton)
+        
+        self.dw.setInputPoint(QgsPointXY(1,1))
+        self.assertEqual(helperFormatCoordinates("1.000000000"), self.dw.inLeftDec.text())
+        self.assertEqual("E", self.dw.leftDirButton.text())
+        self.assertEqual(helperFormatCoordinates("1.000000000"), self.dw.inRightDec.text())
+        self.assertEqual("N", self.dw.rightDirButton.text())
+        
+        self.dw.setInputPoint(QgsPointXY(-1,1))
+        self.assertEqual(helperFormatCoordinates("1.000000000"), self.dw.inLeftDec.text())
+        self.assertEqual("W", self.dw.leftDirButton.text())
+        self.assertEqual(helperFormatCoordinates("1.000000000"), self.dw.inRightDec.text())
+        self.assertEqual("N", self.dw.rightDirButton.text())
+        
+        self.dw.setInputPoint(QgsPointXY(1,-1))
+        self.assertEqual(helperFormatCoordinates("1.000000000"), self.dw.inLeftDec.text())
+        self.assertEqual("E", self.dw.leftDirButton.text())
+        self.assertEqual(helperFormatCoordinates("1.000000000"), self.dw.inRightDec.text())
+        self.assertEqual("S", self.dw.rightDirButton.text())
+        
+        self.dw.setInputPoint(QgsPointXY(-1,-1))
+        self.assertEqual(helperFormatCoordinates("1.000000000"), self.dw.inLeftDec.text())
+        self.assertEqual("W", self.dw.leftDirButton.text())
+        self.assertEqual(helperFormatCoordinates("1.000000000"), self.dw.inRightDec.text())
+        self.assertEqual("S", self.dw.rightDirButton.text())
+        
         
 if __name__ == "__main__":
     suite = unittest.makeSuite(CoordinatorIntegrationTest)

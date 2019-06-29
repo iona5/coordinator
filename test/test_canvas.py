@@ -2,10 +2,11 @@ import unittest
 import qgis
 
 from coordinator.coordinator import Coordinator
-from coordinator.test.utilities import get_qgis_app, IFACE
+from coordinator.test.utilities import get_qgis_app, IFACE,\
+    helperFormatCoordinates
 from PyQt5.QtTest import QTest
 from PyQt5.QtWidgets import QDialog, QMainWindow, QDockWidget, QWidget
-from PyQt5.Qt import Qt, QSize
+from PyQt5.Qt import Qt, QSize, QLocale
 import os
 from qgis.core import QgsProject, QgsVectorLayer, QgsCoordinateReferenceSystem, QgsRectangle, QgsPointXY
 from PyQt5 import QtCore
@@ -100,6 +101,57 @@ class CoordinatorCanvasTest(unittest.TestCase):
          # check non visible 
         self.assertFalse(CANVAS.sceneRect().contains(marker.scenePos()))
         self.assertTrue(self.dw.messageIcon.isVisible())
+        
+    def testCaptureWest4326(self):
+        CANVAS.setDestinationCrs(QgsCoordinateReferenceSystem("EPSG:4326"))
+        #self.dw.setMinimumWidth(self.dw.width() + 50)
+        QTest.qWait(100)
+        CANVAS.zoomToFeatureExtent(QgsRectangle(-100, 70, -99, 71 ))
+        QTest.qWait(100)
+        
+        QTest.mouseClick(self.dw.captureCoordButton, Qt.LeftButton)
+        QTest.qWait(100)
+        
+        mapToPixel = CANVAS.getCoordinateTransform()
+        testPosition = QgsPointXY(-99.5, 70.5)
+        testPositionPixels = mapToPixel.transform(testPosition)
+        
+        QTest.mouseClick(CANVAS.viewport(), Qt.LeftButton, pos = testPositionPixels.toQPointF().toPoint())
+        QTest.qWait(100)
+        
+        # recalculate and click again, because the GUI might have moved a bit:
+        testPositionPixels = mapToPixel.transform(testPosition)
+        
+        QTest.mouseClick(CANVAS.viewport(), Qt.LeftButton, pos = testPositionPixels.toQPointF().toPoint())
+        QTest.qWait(100)
+        
+        self.assertEqual("99", self.dw.inLeft.text())
+        self.assertEqual("30", self.dw.inLeftMin.text())
+        self.assertEqual(helperFormatCoordinates("0.00"), self.dw.inLeftSec.text())
+        self.assertEqual("W", self.dw.leftDirButton.text())
+        
+        self.assertEqual("70", self.dw.inRight.text())
+        self.assertEqual("30", self.dw.inRightMin.text())
+        self.assertEqual(helperFormatCoordinates("0.00"), self.dw.inRightSec.text())
+        self.assertEqual("N", self.dw.rightDirButton.text())
+        
+        QTest.mouseClick(self.dw.inputAsDec, Qt.LeftButton)
+        
+        self.assertAlmostEqual(99.5, QLocale().toFloat(self.dw.inLeftDec.text())[0], places = 2)
+        self.assertEqual("W", self.dw.leftDirButton.text())
+        self.assertAlmostEqual(70.5, QLocale().toFloat(self.dw.inRightDec.text())[0], places = 2)
+        self.assertEqual("N", self.dw.rightDirButton.text())
+        
+        # repeat test while in decimal mode:
+        testPositionPixels = mapToPixel.transform(testPosition)
+        QTest.mouseClick(CANVAS.viewport(), Qt.LeftButton, pos = testPositionPixels.toQPointF().toPoint())
+        QTest.qWait(100)
+                
+        self.assertAlmostEqual(99.5, QLocale().toFloat(self.dw.inLeftDec.text())[0], places = 2)
+        self.assertEqual("W", self.dw.leftDirButton.text())
+        self.assertAlmostEqual(70.5, QLocale().toFloat(self.dw.inRightDec.text())[0], places = 2)
+        self.assertEqual("N", self.dw.rightDirButton.text())
+        
         
 
 if __name__ == "__main__":

@@ -258,8 +258,13 @@ class CoordinatorDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
         precision = 9 if self.sectionIsGeographic[self.SectionInput] else 3
 
-        self.inLeftDec.setText(QLocale().toString(point.x() if self._eastingLeftNorthingRight else point.y(), "f", precision))
-        self.inRightDec.setText(QLocale().toString(point.y() if self._eastingLeftNorthingRight else point.x(),"f", precision))
+        # remove leading minus when setting decimal fields. The correct state for
+        # the hemisphere buttons is applied in setDmsInputFromDecimal() later.
+        xDec = abs(point.x())
+        yDec = abs(point.y())
+
+        self.inLeftDec.setText(QLocale().toString(xDec if self._eastingLeftNorthingRight else yDec, "f", precision))
+        self.inRightDec.setText(QLocale().toString(yDec if self._eastingLeftNorthingRight else xDec,"f", precision))
 
         self.setDmsInputFromDecimal(point.x(), point.y())
 
