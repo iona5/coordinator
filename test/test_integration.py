@@ -246,7 +246,23 @@ class CoordinatorIntegrationTest(CoordinatorTestCase):
         self.assertEqual(helperFormatCoordinates("1.000000000"), self.dw.inRightDec.text())
         self.assertEqual("S", self.dw.rightDirButton.text())
         
+    def testCrsChangeOnLayer(self):
+        """[GITHUB #1] CRS change of selected layer"""
         
+        eLayer = self.addEuropeLayer()
+        self.assertEqual("EPSG:4326", eLayer.crs().authid())
+        global IFACE
+        IFACE.setActiveLayer(eLayer)
+        
+        self.assertEqual("EPSG:4326", self.coordinator.outputCrs().authid())
+        
+        eLayer.setCrs(QgsCoordinateReferenceSystem("EPSG:32633"))
+        self.assertEqual("EPSG:32633", eLayer.crs().authid())
+        self.assertEqual("EPSG:32633", self.coordinator.outputCrs().authid())
+        self.project.removeMapLayer(eLayer)
+        
+        
+    
 if __name__ == "__main__":
     suite = unittest.makeSuite(CoordinatorIntegrationTest)
     runner = unittest.TextTestRunner(verbosity=2)
