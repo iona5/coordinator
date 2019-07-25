@@ -54,6 +54,8 @@ class Coordinator():
         self.iface = iface
         self.canvas = iface.mapCanvas()
         self._project = QgsProject.instance()
+        
+        self._observingLayer = None
             
         self._uiHook = mainWindow if isinstance(mainWindow, QMainWindow) else iface
         
@@ -190,6 +192,12 @@ class Coordinator():
         except TypeError: pass
         try: self.iface.projectRead.disconnect(self.projectRead)
         except TypeError: pass
+        
+        if (self._observingLayer != None) and sip.isdeleted(self._observingLayer):
+            self._observingLayer = None
+            
+        if self._observingLayer:
+            self._observingLayer.crsChanged.disconnect(self.layerChangedCrs)
 
     def _currentEffectiveCrsInMap(self):
         activeLayer = self.iface.activeLayer()
@@ -432,10 +440,24 @@ class Coordinator():
         self.__initTransformers()
         self.dockwidget.resetInterface()
 
-    def currentLayerChanged(self, layer):
+    def currentLayerChanged(self, layer):        
+        
+        if self._observingLayer:
+            self._observingLayer.crsChanged.disconnect(self.layerChangedCrs)
+        
+        if layer:
+            self._observingLayer = layer
+            self._observingLayer.crsChanged.connect(self.layerChangedCrs)
+        
         #coordinatorLog("%s" % type(layer).__name__)
         if self.dockwidget.outputCrsConn.isChecked():
             self.setOutputCrs(self._currentEffectiveCrsInMap())
+    
+    def layerChangedCrs(self):
+        #coordinatorLog("%s" % type(layer).__name__)
+        if self.dockwidget.outputCrsConn.isChecked():
+            self.setOutputCrs(self._currentEffectiveCrsInMap())
+        
 
     def run(self):
         """Run method that loads and starts the plugin"""
