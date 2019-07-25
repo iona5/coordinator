@@ -12,6 +12,7 @@ def run_all():
     runner.run(suite)
     
 class CoordinatorTestCase(unittest.TestCase):
-  def __init__(self):
-    super(CoordinatorTestCase, self).__init__()
+  @classmethod
+  def setUpClass(cls):
+    super(CoordinatorTestCase, cls).setUpClass()
 
