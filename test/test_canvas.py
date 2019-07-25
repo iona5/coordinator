@@ -4,17 +4,20 @@ import qgis
 from coordinator.coordinator import Coordinator
 from coordinator.test.utilities import get_qgis_app, IFACE,\
     helperFormatCoordinates
+from coordinator.test import CoordinatorTestCase
 from PyQt5.QtTest import QTest
 from PyQt5.QtWidgets import QDialog, QMainWindow, QDockWidget, QWidget
 from PyQt5.Qt import Qt, QSize, QLocale
 import os
-from qgis.core import QgsProject, QgsVectorLayer, QgsCoordinateReferenceSystem, QgsRectangle, QgsPointXY
+from qgis.core import QgsCoordinateReferenceSystem, QgsRectangle, QgsPointXY
 from PyQt5 import QtCore
 from coordinator.test.qgis_interface import QgisStubInterface
 
 
-class CoordinatorCanvasTest(unittest.TestCase):
+class CoordinatorCanvasTest(CoordinatorTestCase):
     def setUp(self):
+        
+        super().setUp()
         
         global CANVAS, IFACE
         QGIS_APP, IFACE, CANVAS = get_qgis_app()
@@ -34,12 +37,11 @@ class CoordinatorCanvasTest(unittest.TestCase):
         if self.window:
             self.window.show()
             
-        self.project = QgsProject.instance()
-        self.project.addMapLayer(QgsVectorLayer(os.path.join(os.path.dirname(__file__), "europe.geojson" ), "europe", "ogr"), True)
-        #
+        self.addEuropeLayer()
 
 
     def tearDown(self):
+        super().tearDown()
         self.project.clear()
         self.dw.close()
         QTest.qWait(200)

@@ -3,16 +3,17 @@ import qgis
 
 from coordinator.test.utilities import get_qgis_app, helperFormatCoordinates
 from coordinator.coordinator import Coordinator
+from coordinator.test import CoordinatorTestCase
 from qgis._core import QgsCoordinateReferenceSystem, QgsPointXY
 from PyQt5.QtTest import QTest
 from PyQt5 import QtCore
 from PyQt5.Qt import QLocale
 
-class CoordinatorIntegrationTest(unittest.TestCase):
-    
+class CoordinatorIntegrationTest(CoordinatorTestCase):
+   
     @classmethod
     def setUpClass(cls):
-        super(CoordinatorIntegrationTest, cls).setUpClass()
+        super(CoordinatorTestCase, CoordinatorIntegrationTest).setUpClass()
         # some tests may have used objects and the C++ objects
         # might have been deleted. lets make sure we have a clean 
         # slate.
@@ -20,6 +21,8 @@ class CoordinatorIntegrationTest(unittest.TestCase):
         QGIS_APP, IFACE, CANVAS = get_qgis_app()
     
     def setUp(self):
+        super().setUp()
+        
         self.coordinator = Coordinator(IFACE)
         self.coordinator.run()
         self.dw = self.coordinator.dockwidget
@@ -31,6 +34,9 @@ class CoordinatorIntegrationTest(unittest.TestCase):
             
         self.coordinator = None
         self.dw = None
+        
+        super().tearDown()
+        
 
     def test_openPlugin(self):
         self.assertTrue(self.coordinator.dockwidget.isVisible())

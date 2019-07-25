@@ -13,18 +13,35 @@ def run_all():
     runner.run(suite)
     
 class CoordinatorTestCase(unittest.TestCase):
-  @classmethod
-  def setUpClass(cls):
-    super(CoordinatorTestCase, cls).setUpClass()
-    cls.project = QgsProject.instance()
 
+  def __init__(self, testCase):
+    super(unittest.TestCase, self).__init__(testCase)
+    self.project = None
+    
+    self._addedLayers = []
+    
+
+  def setUp(self):
+    self.project = QgsProject.instance()
+    
+    
+  def tearDown(self):
+    while len(self._addedLayers) > 0:
+        layerName = self._addedLayers.pop() 
+        layers = self.project.mapLayersByName(layerName)
+        self.project.removeMapLayers([layer.id() for layer in layers])
+        
+    
   def addMapLayer(self, mapLayer):
     self.project.addMapLayer(mapLayer, True)
+    self._addedLayers.append(mapLayer.name())
+    
     
   def addVectorLayerFile(self, vectorLayerFile, vectorLayerName):
     vectorLayer = QgsVectorLayer(vectorLayerFile, vectorLayerName, "ogr")
     self.addMapLayer(vectorLayer)
     return vectorLayer
+
 
   def addEuropeLayer(self):
     return self.addVectorLayerFile(os.path.join(os.path.dirname(__file__), "data/europe.geojson" ), "europe")
