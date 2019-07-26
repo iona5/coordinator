@@ -13,6 +13,7 @@
      Copyright (c) 2014 Tim Sutton, tim@linfiniti.com
 
 """
+import sip
 
 __author__ = 'tim@linfiniti.com'
 __revision__ = '$Format:%H$'
@@ -74,6 +75,10 @@ class QgisStubInterface(QObject):
         #LOGGER.debug('addLayers called on qgis_interface')
         #LOGGER.debug('Number of layers being added: %s' % len(layers))
         #LOGGER.debug('Layer Count Before: %s' % len(self.canvas.layers()))
+        
+        if sip.isdeleted(self.canvas):
+            return
+        
         current_layers = self.canvas.layers()
         final_layers = []
         for layer in current_layers:
