@@ -367,6 +367,14 @@ class Coordinator():
             self.marker.setCenter(self.inputCoordinatesInCanvasCrs())
         else:
             self.dockwidget.clearFieldsInSection(CoordinatorDockWidget.SectionOutput)
+            
+    
+    def reset(self):
+        self.__initTransformers()
+        self.dockwidget.resetInterface()
+        self.dockwidget.setEastingInverted(False)
+        self.dockwidget.setNorthingInverted(False)
+        
 
     def inputCoordinatesInCanvasCrs(self):
         (x, y) = self.dockwidget.inputCoordinates()
@@ -437,8 +445,7 @@ class Coordinator():
     def projectRead(self):
         #coordinatorLog("new project")
         self._project = QgsProject.instance()
-        self.__initTransformers()
-        self.dockwidget.resetInterface()
+        self.reset()
 
     def currentLayerChanged(self, layer):        
         
