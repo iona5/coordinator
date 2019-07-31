@@ -125,7 +125,7 @@ class CoordinatorCanvasTest(CoordinatorTestCase):
         CANVAS.setDestinationCrs(QgsCoordinateReferenceSystem("EPSG:4326"))
         #self.dw.setMinimumWidth(self.dw.width() + 50)
         QTest.qWait(100)
-        CANVAS.zoomToFeatureExtent(QgsRectangle(-100, 70, -99, 71 ))
+        CANVAS.zoomToFeatureExtent(QgsRectangle(-99.7, 70.3, -99.3, 70.7 ))
         QTest.qWait(100)
         
         QTest.mouseClick(self.dw.captureCoordButton, Qt.LeftButton)
@@ -145,13 +145,13 @@ class CoordinatorCanvasTest(CoordinatorTestCase):
         QTest.qWait(100)
         
         self.assertEqual("99", self.dw.inLeft.text())
-        self.assertEqual("30", self.dw.inLeftMin.text())
-        self.assertEqual(helperFormatCoordinates("0.00"), self.dw.inLeftSec.text())
+        self.assertTextFieldBetween(28, 31, self.dw.inLeftMin)
+        #self.assertEqual(helperFormatCoordinates("0.00"), self.dw.inLeftSec.text())
         self.assertEqual("W", self.dw.leftDirButton.text())
         
         self.assertEqual("70", self.dw.inRight.text())
-        self.assertEqual("30", self.dw.inRightMin.text())
-        self.assertEqual(helperFormatCoordinates("0.00"), self.dw.inRightSec.text())
+        self.assertTextFieldBetween(28, 31, self.dw.inRightMin)
+        #self.assertEqual(helperFormatCoordinates("0.00"), self.dw.inRightSec.text())
         self.assertEqual("N", self.dw.rightDirButton.text())
         
         QTest.mouseClick(self.dw.inputAsDec, Qt.LeftButton)
