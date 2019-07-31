@@ -28,3 +28,25 @@ class CoordinatorTestCase(unittest.TestCase):
 
   def addEuropeLayer(self):
     return self.addVectorLayerFile(os.path.join(os.path.dirname(__file__), "data/europe.geojson" ), "europe")
+
+
+  def assertTextFieldCloseTo(self, expected, textField, tolerance = 1, msg = None):
+      textFieldValue = float(textField.text())
+      
+      result = ( (expected - tolerance) <= textFieldValue <= (expected + tolerance) )
+      
+      if msg == None:
+          msg = "value '%f' of QTextField is not close to %f±%f)" % (textFieldValue, expected, tolerance)
+      
+      self.assertTrue(result, msg)
+      
+      
+  def assertTextFieldBetween(self, lower, upper, textField, msg = None):
+      textFieldValue = float(textField.text())
+      
+      result = (lower < textFieldValue < upper)
+      
+      if msg == None:
+          msg = "value '%f' of QTextField is not between %f and %f)" % (textFieldValue, lower, upper)
+      
+      self.assertTrue(result, msg)
