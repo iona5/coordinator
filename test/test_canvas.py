@@ -29,9 +29,21 @@ class CoordinatorCanvasTest(CoordinatorTestCase):
         else:
             self.window = None
         
+        # try to get the current instance of coordinator:
+        try:
+            self.coordinator = qgis.utils.plugins['coordinator']
+        except KeyError:
+            self.coordinator = Coordinator(IFACE, self.window)
+            
         
-        self.coordinator = Coordinator(IFACE, self.window)
-        self.coordinator.run()
+        self.pluginWasOpen = self.coordinator.pluginIsActive
+        
+        if not self.coordinator.pluginIsActive:
+            self.coordinator.run()
+        
+        
+        self.coordinator.reset()
+            
         self.dw = self.coordinator.dockwidget
         
         if self.window:
@@ -43,7 +55,12 @@ class CoordinatorCanvasTest(CoordinatorTestCase):
     def tearDown(self):
         super().tearDown()
         self.project.clear()
-        self.dw.close()
+        
+        if not self.pluginWasOpen:
+            self.dw.close()
+        else:
+            self.coordinator.reset()
+            
         QTest.qWait(200)
         try:
             self.window.close()
