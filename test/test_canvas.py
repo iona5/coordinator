@@ -171,9 +171,11 @@ class CoordinatorCanvasTest(CoordinatorTestCase):
         self.assertAlmostEqual(70.5, QLocale().toFloat(self.dw.inRightDec.text())[0], places = 2)
         self.assertEqual("N", self.dw.rightDirButton.text())
         
-        
 
-if __name__ == "__main__":
+def runTest():
     suite = unittest.makeSuite(CoordinatorCanvasTest)
     runner = unittest.TextTestRunner(verbosity=2)
     runner.run(suite)
+
+if __name__ == "__main__":
+    runTest()
