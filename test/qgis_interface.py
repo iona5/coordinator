@@ -59,6 +59,8 @@ class QgisStubInterface(QObject):
 
         # For processing module
         self.destCrs = None
+        
+        self._activeLayer = None
 
     @pyqtSlot("QList<QgsMapLayer*>")
     def addLayers(self, layers):
@@ -152,10 +154,18 @@ class QgisStubInterface(QObject):
 
     def activeLayer(self):
         """Get pointer to the active layer (layer selected in the legend)."""
+        
+        if self._activeLayer:
+            return self._activeLayer
+            
         # noinspection PyArgumentList
         layers = self.project.mapLayers()
         for item in layers:
             return layers[item]
+    
+    def setActiveLayer(self, layer):
+        self._activeLayer = layer
+        self.currentLayerChanged.emit(layer)
 
     def addToolBarIcon(self, action):
         """Add an icon to the plugins toolbar.
