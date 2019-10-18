@@ -14,7 +14,7 @@ rm -rf __pycache__ \
   icons \
   README.md \
   i18n/af.ts \
-  i18n/coordinator_de.ts \
+  i18n/coordinator_*.ts \
   i18n/coordinator.pro \
   .gitlab-ci.yml \
   .travis.yml
