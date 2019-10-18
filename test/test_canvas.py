@@ -5,13 +5,17 @@ from coordinator.coordinator import Coordinator
 from coordinator.test.utilities import get_qgis_app, IFACE,\
     helperFormatCoordinates
 from coordinator.test import CoordinatorTestCase
+from coordinator.test.qgis_interface import QgisStubInterface
+
 from PyQt5.QtTest import QTest
 from PyQt5.QtWidgets import QDialog, QMainWindow, QDockWidget, QWidget
 from PyQt5.Qt import Qt, QSize, QLocale
+from PyQt5 import QtCore
 import os
 from qgis.core import QgsCoordinateReferenceSystem, QgsRectangle, QgsPointXY
-from PyQt5 import QtCore
-from coordinator.test.qgis_interface import QgisStubInterface
+from qgis.gui import QgsMapToolPan, QgsMapToolCapture, QgsAdvancedDigitizingDockWidget
+from pkg_resources._vendor.packaging import version
+
 
 
 class CoordinatorCanvasTest(CoordinatorTestCase):
@@ -170,7 +174,41 @@ class CoordinatorCanvasTest(CoordinatorTestCase):
         self.assertEqual("W", self.dw.leftDirButton.text())
         self.assertAlmostEqual(70.5, QLocale().toFloat(self.dw.inRightDec.text())[0], places = 2)
         self.assertEqual("N", self.dw.rightDirButton.text())
-        
+
+
+    def testMapToolChange(self):
+
+        if isinstance(IFACE, QgisStubInterface):
+            advDigitizeWidget = QgsAdvancedDigitizingDockWidget(CANVAS, CANVAS)
+
+            if ( version.parse(QtCore.qVersion()) < version.parse("5.11.0") ):
+                toolMode = QgsMapToolCapture.CaptureLine
+            else:
+                toolMode = QgsMapToolCapture.CaptureMode.CaptureLine
+
+            captureMapTool = QgsMapToolCapture(CANVAS, advDigitizeWidget, toolMode)
+
+            self.coordinator.reset()
+            CANVAS.setMapTool(QgsMapToolPan(CANVAS))
+            self.assertFalse(self.dw.addFeatureButton.isEnabled())
+            QTest.keyClicks(self.dw.inLeft, "8" )
+            self.assertFalse(self.dw.addFeatureButton.isEnabled())
+
+            CANVAS.setMapTool(captureMapTool)
+
+            self.assertTrue(self.dw.addFeatureButton.isEnabled())
+
+            CANVAS.setMapTool(QgsMapToolPan(CANVAS))
+            self.assertFalse(self.dw.addFeatureButton.isEnabled())
+
+            self.coordinator.reset()
+            self.assertFalse(self.dw.addFeatureButton.isEnabled())
+            CANVAS.setMapTool(captureMapTool)
+            # add Feature Button should not be enabled when there is no input
+            self.assertFalse(self.dw.addFeatureButton.isEnabled())
+        else:
+            self.skipTest("not yet implemented for QGIS GUI tests")
+
 
 def runTest():
     suite = unittest.makeSuite(CoordinatorCanvasTest)
