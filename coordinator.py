@@ -73,7 +73,7 @@ class Coordinator():
         locale_path = os.path.join(
             self.plugin_dir,
             'i18n',
-            'Coordinator_{}.qm'.format(locale))
+            'coordinator_{}.qm'.format(locale))
 
         if os.path.exists(locale_path):
             self.translator = QTranslator()
