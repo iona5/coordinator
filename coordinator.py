@@ -169,19 +169,33 @@ class Coordinator():
         shouldEnable = bool(self.dockwidget.hasInput() and self.__compatibleMapTool())
         return shouldEnable
 
+
     def __compatibleMapTool(self):
         newTool = self.canvas.mapTool()
         if( newTool != None and (newTool.flags() & QgsMapTool.EditTool) ) :
 
             newTool = sip.cast(newTool, QgsMapToolCapture)
 
-            if(newTool.mode() == QgsMapToolCapture.CaptureMode.CapturePoint
-                or newTool.mode() == QgsMapToolCapture.CaptureMode.CapturePolygon
-                or newTool.mode() == QgsMapToolCapture.CaptureMode.CaptureLine
-                ):
-               return newTool
+            # pre-check probably fixing issue #3 regarding Enums with Qt >= 5.11:
+            #  --> https://www.riverbankcomputing.com/static/Docs/PyQt5/gotchas.html#enums
+            try:
+                validModes = (
+                    QgsMapToolCapture.CaptureMode.CapturePoint,
+                    QgsMapToolCapture.CaptureMode.CapturePolygon,
+                    QgsMapToolCapture.CaptureMode.CaptureLine
+                )
+            except AttributeError:
+                validModes = (
+                    QgsMapToolCapture.CapturePoint,
+                    QgsMapToolCapture.CapturePolygon,
+                    QgsMapToolCapture.CaptureLine
+                )
+
+            if newTool.mode() in validModes:
+                return newTool
 
         return False
+
 
     def _disconnectExternalSignals(self):
         try: self.iface.mapCanvas().destinationCrsChanged.disconnect(self.mapCanvasCrsChanged)
