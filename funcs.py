@@ -40,4 +40,4 @@ class CoordinatorTranslator:
         :rtype: QString
         """
         # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
-        return QCoreApplication.translate('Coordinator', message, disambugation)
+        return QCoreApplication.translate('CT', message, disambugation)
