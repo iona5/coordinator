@@ -316,7 +316,9 @@ class Coordinator():
             feature.setGeometry(geometry)
             if( (len(layer.fields()) < 1) or self.iface.openFeatureForm(layer, feature)):
                 result = layer.addFeature(feature)
-                #coordinatorLog("Point written to layer")
+                if(result):
+                    #coordinatorLog("Point successfully written to layer")
+                    pass
                 layer.triggerRepaint()
 
         elif (
