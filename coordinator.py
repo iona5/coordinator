@@ -211,7 +211,8 @@ class Coordinator():
             self._observingLayer = None
             
         if self._observingLayer:
-            self._observingLayer.crsChanged.disconnect(self.layerChangedCrs)
+            try: self._observingLayer.crsChanged.disconnect(self.layerChangedCrs)
+            except TypeError: pass
 
     def _currentEffectiveCrsInMap(self):
         activeLayer = self.iface.activeLayer()
