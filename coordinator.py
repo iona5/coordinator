@@ -451,7 +451,21 @@ class Coordinator():
 
     def mapToolChanged(self):
         #coordinatorLog("map tools changed")
-        self.dockwidget.addFeatureButton.setEnabled(self.__checkEnableAddFeatureButton())
+        #coordinatorLog( type( self.canvas.mapTool() ).__name__ )
+       
+        currentMapTool = self.canvas.mapTool()
+        
+        if(currentMapTool == self.mapTool):
+            # user selected our coordinate capture tool -> do nothing
+            pass
+        elif( self.__checkEnableAddFeatureButton() ):
+            # user selected a tool to modify features -> enable our add feature button
+            self.dockwidget.addFeatureButton.setEnabled(True)
+            self.dockwidget.captureCoordButton.setChecked(False)
+        else:
+            # user selected a totally unrelated tool -> make sure our coordinate capture tool is disabled
+            self.dockwidget.captureCoordButton.setChecked(False)
+        
 
     def addFeatureClicked(self):
         self.addCurrentCoordinatesToDigitizeSession()
