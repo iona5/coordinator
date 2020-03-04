@@ -10,8 +10,10 @@ stages:
   - name: test
   - name: deploy
 
+before_install:
+  - sudo apt-get -y install python3-pyqt5 pyqt5-dev-tools
+
 install:
-  - pip install pyqt5
   - pip install markdown2
   
 env:
