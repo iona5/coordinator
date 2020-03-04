@@ -8,9 +8,9 @@ build:
   stage: build
   script:
     - docker pull qgis/qgis:release-3_4
-    - docker pull qgis/qgis:release-3_6
-    - docker pull qgis/qgis:final-3_8_3
-    - docker run -d --name qgis-build -e DISPLAY=:99 qgis/qgis:release-3_6
+    - docker pull qgis/qgis:release-3_10
+    - docker pull qgis/qgis:release-3_12
+    - docker run -d --name qgis-build -e DISPLAY=:99 qgis/qgis:release-3_10
     - sleep 2
     - docker exec qgis-build sh -c "pip3 install markdown2"
     - docker exec qgis-build sh -c "mkdir -p /coordinator"
@@ -28,7 +28,7 @@ build:
     - docker stop qgis-build
     - docker container rm qgis-build
 
-run-tests-ltr:
+run-tests-34:
   stage: test
   script:
     - docker run -d --name qgis-34 -e DISPLAY=:99 qgis/qgis:release-3_4
@@ -39,25 +39,25 @@ run-tests-ltr:
     - docker stop qgis-34
     - docker container rm qgis-34
 
-run-tests-36:
+run-tests-ltr:
   stage: test
   script:
-    - docker run -d --name qgis-36 -e DISPLAY=:99 qgis/qgis:release-3_6
+    - docker run -d --name qgis-310 -e DISPLAY=:99 qgis/qgis:release-3_10
     - sleep 2
-    - /bin/bash scripts/docker_test_setup.sh qgis-36
-    - docker exec -t qgis-36 sh -c "qgis_testrunner.sh coordinator.test.run_all"
+    - /bin/bash scripts/docker_test_setup.sh qgis-310
+    - docker exec -t qgis-310 sh -c "qgis_testrunner.sh coordinator.test.run_all"
   after_script:
-    - docker stop qgis-36
-    - docker container rm qgis-36
+    - docker stop qgis-310
+    - docker container rm qgis-310
     
-run-tests-38:
+run-tests-312:
   stage: test
   script:
-    - docker run -d --name qgis-38 -e DISPLAY=:99 qgis/qgis:final-3_8_3
+    - docker run -d --name qgis-312 -e DISPLAY=:99 qgis/qgis:release-3_12
     - sleep 2
-    - /bin/bash scripts/docker_test_setup.sh qgis-38
-    - docker exec -t qgis-38 sh -c "qgis_testrunner.sh coordinator.test.run_all"
+    - /bin/bash scripts/docker_test_setup.sh qgis-312
+    - docker exec -t qgis-312 sh -c "qgis_testrunner.sh coordinator.test.run_all"
   after_script:
-    - docker stop qgis-38
-    - docker container rm qgis-38
+    - docker stop qgis-312
+    - docker container rm qgis-312
 

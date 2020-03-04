@@ -18,8 +18,8 @@ install:
   
 env:
   - QGIS_RELEASE=3_4
-  - QGIS_RELEASE=3_6
-  - QGIS_RELEASE=3_8
+  - QGIS_RELEASE=3_10
+  - QGIS_RELEASE=3_12
   
 script:
   - cd ..
@@ -33,7 +33,7 @@ jobs:
     - stage: deploy
       services:
       env:
-        - QGIS_RELEASE=3_6
+        - QGIS_RELEASE=3_10
       script:
         - GIT_SHORT_HASH=$(git rev-parse --short HEAD)
         - cd ..
