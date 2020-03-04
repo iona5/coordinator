@@ -80,8 +80,8 @@
     </message>
     <message>
         <location filename="../coordinator_dockwidget_base.ui" line="273"/>
-        <source>Pick Point from Map (Shift+click grabs also the project&apos;s CRS)</source>
-        <translation>Récupérer point depuis la carte (Shift + click pour saisir aussi le CRS du projet)</translation>
+        <source>Pick Point from Map (Ctrl+click grabs also the project&apos;s CRS)</source>
+        <translation>Récupérer point depuis la carte (Ctrl + click pour saisir aussi le CRS du projet)</translation>
     </message>
     <message>
         <location filename="../coordinator_dockwidget_base.ui" line="672"/>

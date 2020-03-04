@@ -270,7 +270,7 @@
               </size>
              </property>
              <property name="toolTip">
-              <string>Pick Point from Map (Shift+click grabs also the project's CRS)</string>
+              <string>Pick Point from Map (Ctrl+click grabs also the project's CRS)</string>
              </property>
              <property name="whatsThis">
               <string/>

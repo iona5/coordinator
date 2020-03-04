@@ -80,8 +80,8 @@
     </message>
     <message>
         <location filename="../coordinator_dockwidget_base.ui" line="273"/>
-        <source>Pick Point from Map (Shift+click grabs also the project&apos;s CRS)</source>
-        <translation>Koordinaten von Karte wählen (Umschalt+Klick übernimmt auch das Koordinatensystem)</translation>
+        <source>Pick Point from Map (Ctrl+click grabs also the project&apos;s CRS)</source>
+        <translation>Koordinaten von Karte wählen (Strg+Klick übernimmt auch das Koordinatensystem)</translation>
     </message>
     <message>
         <location filename="../coordinator_dockwidget_base.ui" line="672"/>
