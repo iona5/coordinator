@@ -23,30 +23,35 @@ QGIS_APP, IFACE, CANVAS = get_qgis_app()
 
 class SafeTranslationsTest(unittest.TestCase):
     """Test translations work."""
+    
+    translator = QTranslator()
+    
+    @classmethod
+    def setUpClass(cls):
+        super(SafeTranslationsTest, cls).setUpClass()
+        parent_path = os.path.join(os.path.dirname(__file__), os.path.pardir)
+        dir_path = os.path.abspath(parent_path)
+        file_path = os.path.join(dir_path, 'i18n', 'coordinator_de.qm')
+        SafeTranslationsTest.translator.load(file_path)
+
 
     def setUp(self):
         """Runs before each test."""
         if 'LANG' in iter(os.environ.keys()):
             os.environ.__delitem__('LANG')
+        
 
     def tearDown(self):
         """Runs after each test."""
         if 'LANG' in iter(os.environ.keys()):
             os.environ.__delitem__('LANG')
 
+
     def test_qgis_translations(self):
         """Test that translations work."""
-        return
-        
-#         parent_path = os.path.join(__file__, os.path.pardir, os.path.pardir)
-#         dir_path = os.path.abspath(parent_path)
-#         file_path = os.path.join(dir_path, 'i18n', 'af.qm')
-#         translator = QTranslator()
-#         translator.load(file_path)
-#         QCoreApplication.installTranslator(translator)
-# 
-#         real_message = QCoreApplication.translate("@default", 'Good morning')
-#         self.assertEqual(real_message, expected_message)
+        QCoreApplication.installTranslator(SafeTranslationsTest.translator)
+        real_message = QCoreApplication.translate("CT", 'outside of map extent')
+        self.assertEqual(real_message, 'außerhalb der Karte')
 
 
 if __name__ == "__main__":
