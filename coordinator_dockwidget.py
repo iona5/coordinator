@@ -256,12 +256,16 @@ class CoordinatorDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
     def setInputPoint(self, point):
         #QgsMessageLog.logMessage("%s/%s" % (point.x(), point.y()))
 
-        precision = 9 if self.sectionIsGeographic[self.SectionInput] else 3
-
-        # remove leading minus when setting decimal fields. The correct state for
-        # the hemisphere buttons is applied in setDmsInputFromDecimal() later.
-        xDec = abs(point.x())
-        yDec = abs(point.y())
+        if self.sectionIsGeographic[self.SectionInput]:
+            precision = 9
+            # remove leading minus when setting decimal fields. The correct state for
+            # the hemisphere buttons is applied in setDmsInputFromDecimal() later.
+            xDec = abs(point.x())
+            yDec = abs(point.y())
+        else:
+            precision = 3
+            xDec = point.x()
+            yDec = point.y()
 
         self.inLeftDec.setText(QLocale().toString(xDec if self._eastingLeftNorthingRight else yDec, "f", precision))
         self.inRightDec.setText(QLocale().toString(yDec if self._eastingLeftNorthingRight else xDec,"f", precision))
