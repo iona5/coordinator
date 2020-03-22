@@ -1,5 +1,6 @@
 # import qgis libs so that ve set the correct sip api version
 import os, sys, qgis   # pylint: disable=W0611  # NOQA
+from PyQt5.Qt import QLocale
 from qgis.testing import unittest
 from qgis.core import QgsProject, QgsVectorLayer
 
@@ -48,18 +49,19 @@ class CoordinatorTestCase(unittest.TestCase):
 
 
   def assertTextFieldCloseTo(self, expected, textField, tolerance = 1, msg = None):
-      textFieldValue = float(textField.text())
+      textFieldValue = QLocale().toFloat(textField.text())[0]
       
       result = ( (expected - tolerance) <= textFieldValue <= (expected + tolerance) )
       
-      if msg == None:
-          msg = "value '%f' of QTextField is not close to %f±%f)" % (textFieldValue, expected, tolerance)
-      
-      self.assertTrue(result, msg)
+      if(not result):
+          if msg == None:
+              msg = "value '%f' of QTextField is not close to %f±%f)" % (textFieldValue, expected, tolerance)
+        
+          raise AssertionError(msg)
       
       
   def assertTextFieldBetween(self, lower, upper, textField, msg = None):
-      textFieldValue = float(textField.text())
+      textFieldValue = QLocale().toFloat(textField.text())[0]
       
       result = (lower < textFieldValue < upper)
       
