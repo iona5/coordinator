@@ -211,6 +211,35 @@ class CoordinatorCanvasTest(CoordinatorTestCase):
             self.skipTest("not yet implemented for QGIS GUI tests")
 
 
+    def testGeodeticNegative(self):
+        """[GITHUB #12] Negative Values in Geodetic CRS"""
+        
+        crsIn = QgsCoordinateReferenceSystem("EPSG:31254")
+        self.coordinator.setInputCrs(crsIn)
+        
+        CANVAS.setDestinationCrs(crsIn)
+        
+        QTest.qWait(100)
+        CANVAS.zoomToFeatureExtent(QgsRectangle(-80000, 200000, 80000, 250000 ))
+        QTest.qWait(100)
+        
+        QTest.mouseClick(self.dw.captureCoordButton, Qt.LeftButton)
+        QTest.qWait(100)
+        
+        testPosition = QgsPointXY(50000, 230000)
+        self.clickCanvasCoordinate(testPosition)
+        QTest.qWait(500)
+        self.assertTextFieldCloseTo(230000, self.dw.inRightDec, 300)
+        self.assertTextFieldCloseTo(50000, self.dw.inLeftDec, 300)
+        
+        testPosition = QgsPointXY(-50000, 230000)
+        self.clickCanvasCoordinate(testPosition)
+        QTest.qWait(500)
+        self.assertTextFieldCloseTo(230000, self.dw.inRightDec, 300)
+        self.assertTextFieldCloseTo(-50000, self.dw.inLeftDec, 300)
+
+
+
 def runTest():
     suite = unittest.makeSuite(CoordinatorCanvasTest)
     runner = unittest.TextTestRunner(verbosity=2)
