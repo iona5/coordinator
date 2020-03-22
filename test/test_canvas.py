@@ -56,6 +56,12 @@ class CoordinatorCanvasTest(CoordinatorTestCase):
         self.addEuropeLayer()
 
 
+    def clickCanvasCoordinate(self, coordinatePointXY):
+        mapToPixel = CANVAS.getCoordinateTransform()
+        testPositionPixels = mapToPixel.transform(coordinatePointXY)
+        QTest.mouseClick(CANVAS.viewport(), Qt.LeftButton, pos = testPositionPixels.toQPointF().toPoint())
+
+
     def tearDown(self):
         super().tearDown()
         self.project.clear()
@@ -135,19 +141,14 @@ class CoordinatorCanvasTest(CoordinatorTestCase):
         QTest.mouseClick(self.dw.captureCoordButton, Qt.LeftButton)
         QTest.qWait(100)
         
-        mapToPixel = CANVAS.getCoordinateTransform()
         testPosition = QgsPointXY(-99.5, 70.5)
-        testPositionPixels = mapToPixel.transform(testPosition)
+        self.clickCanvasCoordinate(testPosition)
         
-        QTest.mouseClick(CANVAS.viewport(), Qt.LeftButton, pos = testPositionPixels.toQPointF().toPoint())
         QTest.qWait(100)
-        
-        # recalculate and click again, because the GUI might have moved a bit:
-        testPositionPixels = mapToPixel.transform(testPosition)
-        
-        QTest.mouseClick(CANVAS.viewport(), Qt.LeftButton, pos = testPositionPixels.toQPointF().toPoint())
+         # recalculate and click again, because the GUI might have moved a bit:
+        self.clickCanvasCoordinate(testPosition)
         QTest.qWait(100)
-        
+                
         self.assertEqual("99", self.dw.inLeft.text())
         self.assertTextFieldBetween(28, 31, self.dw.inLeftMin)
         #self.assertEqual(helperFormatCoordinates("0.00"), self.dw.inLeftSec.text())
@@ -164,10 +165,9 @@ class CoordinatorCanvasTest(CoordinatorTestCase):
         self.assertEqual("W", self.dw.leftDirButton.text())
         self.assertAlmostEqual(70.5, QLocale().toFloat(self.dw.inRightDec.text())[0], places = 2)
         self.assertEqual("N", self.dw.rightDirButton.text())
-        
+
         # repeat test while in decimal mode:
-        testPositionPixels = mapToPixel.transform(testPosition)
-        QTest.mouseClick(CANVAS.viewport(), Qt.LeftButton, pos = testPositionPixels.toQPointF().toPoint())
+        self.clickCanvasCoordinate(testPosition)
         QTest.qWait(100)
                 
         self.assertAlmostEqual(99.5, QLocale().toFloat(self.dw.inLeftDec.text())[0], places = 2)
