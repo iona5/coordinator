@@ -430,7 +430,10 @@ class Coordinator():
             self.canvas.setMapTool(self.mapTool)
             self.mapTool.canvasClicked.connect(self.canvasClickedWithPicker)
         else:
-            self.mapTool.canvasClicked.disconnect(self.canvasClickedWithPicker)
+            try:
+                self.mapTool.canvasClicked.disconnect(self.canvasClickedWithPicker)
+            except TypeError:
+                pass
             self.canvas.unsetMapTool(self.mapTool)
 
     def canvasClickedWithPicker(self, point, button):
