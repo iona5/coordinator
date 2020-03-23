@@ -4,9 +4,9 @@
 name=Coordinator
 qgisMinimumVersion=3.4
 description=Capture, transform and use coordinates
-version=0.2
+version=0.3
 author=Jonas Küpper
-email=qgis@ag99.de
+email=qgis@geograffr.eu
 
 about=The purpose of this plugin is to make handling of coordinate IO easier and includes a transformation tool and supports creation of simple features.
  This plugin overlaps in different ways with the purpose of the plugins Coordinate Capture, Lat Lon Tools and the Advanced Digitize Panel. It however aims to integrate in a clean and simple interface multiple tasks these tools are sometimes used together. And yes...: Its almost as it's just another coordinate tool. :)
@@ -22,7 +22,13 @@ repository=https://github.com/iona5/coordinator
 # Recommended items:
 
 # Uncomment the following line and add your changelog:
-changelog=0.2
+changelog=0.3
+    - issue #2: make sure capture tool is deselected when user selects another tool
+    - issue #12: negative coordinates in geodetic systems were not properly processed
+    - digitize helper announced feature addition without actually knowing if it succeeded
+    - various translation issus (including issues #7, #8) 
+    - internal bugfixes regarding stability and test regime
+  0.2
     - added french translation by SebastienPeillet
     - fix issue #3: switching to edit mode in QGIS compiled with Qt < 5.11 failed
     - fix issue #1: locked CRS does not change when CRS of selected layer changes
