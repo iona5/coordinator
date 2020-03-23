@@ -47,6 +47,7 @@ class CoordinatorCanvasTest(CoordinatorTestCase):
         
         
         self.coordinator.reset()
+        self.coordinator.captureCoordsButtonToggled(False)
             
         self.dw = self.coordinator.dockwidget
         
