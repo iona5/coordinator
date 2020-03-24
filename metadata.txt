@@ -22,7 +22,8 @@ repository=https://github.com/iona5/coordinator
 # Recommended items:
 
 # Uncomment the following line and add your changelog:
-changelog=0.3
+changelog=0.4
+  0.3
     - issue #2: make sure capture tool is deselected when user selects another tool
     - issue #12: negative coordinates in geodetic systems were not properly processed
     - digitize helper announced feature addition without actually knowing if it succeeded

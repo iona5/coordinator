@@ -469,6 +469,7 @@ class Coordinator():
         else:
             # user selected a totally unrelated tool -> make sure our coordinate capture tool is disabled
             self.dockwidget.captureCoordButton.setChecked(False)
+            self.dockwidget.addFeatureButton.setEnabled(False)
         
 
     def addFeatureClicked(self):
