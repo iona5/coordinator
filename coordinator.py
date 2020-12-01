@@ -32,7 +32,7 @@ from PyQt5 import QtCore
 from qgis.gui import QgsProjectionSelectionDialog, QgsVertexMarker, QgsMapToolEmitPoint, QgsMapTool, \
     QgsMapToolCapture, QgsMapMouseEvent, QgsMapToolCapture
 from qgis.core import QgsProject, QgsMessageLog, QgsCoordinateReferenceSystem, QgsCoordinateTransform, \
-    QgsPointXY, QgsGeometry, QgsFeature, QgsVectorLayer, QgsRasterLayer
+    QgsPointXY, QgsGeometry, QgsVectorLayer, QgsRasterLayer, QgsVectorLayerUtils
 from qgis.PyQt import sip
 
 from .coordinator_dockwidget import CoordinatorDockWidget
@@ -310,8 +310,7 @@ class Coordinator():
             #coordinatorLog("Point Capture!")
             layer = self.iface.activeLayer()
             geometry = QgsGeometry.fromPointXY(point)
-            feature = QgsFeature(layer.fields())
-            feature.setGeometry(geometry)
+            feature = QgsVectorLayerUtils.createFeature(layer, geometry, {}, layer.createExpressionContext() )
             if( (len(layer.fields()) < 1) or self.iface.openFeatureForm(layer, feature)):
                 result = layer.addFeature(feature)
                 if(result):
