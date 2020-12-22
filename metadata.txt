@@ -4,7 +4,7 @@
 name=Coordinator
 qgisMinimumVersion=3.4
 description=Capture, transform and use coordinates
-version=0.3
+version=0.4
 author=Jonas Küpper
 email=qgis@geograffr.eu
 
