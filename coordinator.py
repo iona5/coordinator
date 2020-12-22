@@ -309,6 +309,14 @@ class Coordinator():
         if( editTool.mode() == QgsMapToolCapture.CaptureMode.CapturePoint):
             #coordinatorLog("Point Capture!")
             layer = self.iface.activeLayer()
+            
+            # if canvas CRS is not layer CRS we need to transform first:
+            transform = QgsCoordinateTransform(
+                self.canvas.mapSettings().destinationCrs(),
+                layer.sourceCrs(),
+                self._project)
+            point = transform.transform(point, QgsCoordinateTransform.ForwardTransform)
+
             geometry = QgsGeometry.fromPointXY(point)
             feature = QgsVectorLayerUtils.createFeature(layer, geometry, {}, layer.createExpressionContext() )
             if( (len(layer.fields()) < 1) or self.iface.openFeatureForm(layer, feature)):
