@@ -275,10 +275,17 @@ class Coordinator():
     def openCrsSelectionDialogForSection(self, section):
         projSelector = QgsProjectionSelectionDialog()
         if(projSelector.exec()):
+            selectedCrs = projSelector.crs()
+            
+            # workaround for checking if there was no CRS selected
+            # but user clicked 'OK': check if authid-string is empty:
+            if not selectedCrs.authid() :
+                return
+            
             if section == CoordinatorDockWidget.SectionInput:
-                self.setInputCrs(projSelector.crs())
+                self.setInputCrs(selectedCrs)
             elif section == CoordinatorDockWidget.SectionOutput:
-                self.setOutputCrs(projSelector.crs())
+                self.setOutputCrs(selectedCrs)
 
     def setOutputCrsToCanvasCrs(self):
         crs = self.canvas.mapSettings().destinationCrs()
