@@ -138,9 +138,9 @@ class CoordinatorDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             inputField.textEdited.connect(self.__inputFieldsChangedInternal)
             inputField.setValidator(self.decDegreeValidator)
             inputField.installEventFilter(self)
-            
-        self.leftDecIncrementor = ValueIncrementor(self.inLeftDec, 180, -180)
-        self.rightDecIncrementor = ValueIncrementor(self.inLeftDec, 90, -90)
+        
+        self.leftDecIncrementor = ValueIncrementor(self.inLeftDec, 9999999.0, -9999999.0)
+        self.rightDecIncrementor = ValueIncrementor(self.inRightDec, 9999999.0, -9999999.0)
 
         self.outputCrsConn.clicked.connect(partial(self.toggledMapConnection, CoordinatorDockWidget.SectionOutput))
 
