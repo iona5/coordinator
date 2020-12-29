@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x
+set -xe
 if [ -z $1 ] ; then 
 	QGIS_RELEASE=3_10
 else
@@ -16,8 +16,11 @@ if [ ${QGIS_RELEASE} = "3_16" ] ; then
 	docker exec -t qgis-${QGIS_RELEASE} sh -c "apt install --assume-yes python3-pyqt5.qtwebkit python3-pexpect expect >/dev/null" 
 fi
 sleep 2
+set +e
 docker exec -t qgis-${QGIS_RELEASE} sh -c "qgis_testrunner.sh coordinator.test.run_all"
 RESULT=$?
+set -e
+
 docker stop qgis-${QGIS_RELEASE}
 
 if [ ${RESULT} = 0 ]; then
