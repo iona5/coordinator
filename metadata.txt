@@ -3,8 +3,9 @@
 [general]
 name=Coordinator
 qgisMinimumVersion=3.4
+qgisMaximumVersion=3.10
 description=Capture, transform and use coordinates
-version=0.3
+version=0.3.1
 author=Jonas Küpper
 email=qgis@geograffr.eu
 
@@ -22,7 +23,8 @@ repository=https://github.com/iona5/coordinator
 # Recommended items:
 
 # Uncomment the following line and add your changelog:
-changelog=0.4
+changelog=0.3.1
+    - "add Feature"-button should be disabled when selecting non editing tool
     - pull request 16: use default values when capturing points (thanks @AlexanderFinkbeiner)
   0.3
     - issue #2: make sure capture tool is deselected when user selects another tool
