@@ -21,7 +21,8 @@ docker cp ../coordinator ${CONTAINER}:/tests_directory/coordinator
 docker exec ${CONTAINER} sh -c "qgis_setup.sh coordinator"
 
 if [ ${QGIS_RELEASE} = "3_16" ] ; then
-	docker exec -t ${CONTAINER} sh -c "apt install python3-pyqt5.qtwebkit"
+	# the QGIS 3.16 docker image has some missing packages, install these here:
+	docker exec -t ${CONTAINER} sh -c "apt install --assume-yes python3-pyqt5.qtwebkit python3-pexpect expect >/dev/null" 
 fi
 
 sleep 2
