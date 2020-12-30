@@ -29,7 +29,7 @@ sleep 2
 #docker exec -it ${CONTAINER} /bin/bash
 
 set +e
-docker exec -t ${CONTAINER} sh -c "cd /tests_directory && python3 -m coordinator.test"
+docker exec -t ${CONTAINER} sh -c "qgis_testrunner.sh coordinator.test.run_all"
 RESULT=$?
 set -e
 
