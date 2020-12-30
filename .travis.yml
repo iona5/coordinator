@@ -41,7 +41,8 @@ jobs:
         - scripts/build.sh . ${temp_dir}/coordinator
         - export DEPLOY_FILENAME=coordinator-travis-${TRAVIS_TAG}-${GIT_SHORT_HASH}.zip
         - echo ${DEPLOY_FILENAME}
-        - zip -rv ${DEPLOY_FILENAME} ${temp_dir}/coordinator
+        - cp -a ${temp_dir}/coordinator .
+        - zip -rv ${DEPLOY_FILENAME} coordinator
       deploy:
         provider: releases
         api_key: 
