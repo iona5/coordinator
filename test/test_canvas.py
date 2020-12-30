@@ -55,6 +55,7 @@ class CoordinatorCanvasTest(CoordinatorTestCase):
             self.window.show()
             
         self.addEuropeLayer()
+        QTest.qWait(50)
 
 
     def clickCanvasCoordinate(self, coordinatePointXY):
