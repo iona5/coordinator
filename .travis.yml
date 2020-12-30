@@ -19,7 +19,7 @@ install:
 env:
   - QGIS_RELEASE=3_4
   - QGIS_RELEASE=3_10
-  - QGIS_RELEASE=3_16
+#  - QGIS_RELEASE=3_16
   
 script:
   - temp_dir=$(mktemp -d -t coordinator-build-XXXXXXXX)
