@@ -23,9 +23,13 @@ repository=https://github.com/iona5/coordinator
 
 # Uncomment the following line and add your changelog:
 changelog=0.4
-    - pull request 16: use default values when capturing points (thanks @AlexanderFinkbeiner)
     - fix capture with wrong coordinate system with Point geometry
     - ensure a valid CRS is selected when changing through QgsProjectionSelectionDialog (issue #5)
+  0.3.2
+    - metadata fix
+  0.3.1
+    - "add Feature"-button should be disabled when selecting non editing tool
+    - pull request 16: use default values when capturing points (thanks @AlexanderFinkbeiner)
   0.3
     - issue #2: make sure capture tool is deselected when user selects another tool
     - issue #12: negative coordinates in geodetic systems were not properly processed
