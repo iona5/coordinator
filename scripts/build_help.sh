@@ -1,8 +1,14 @@
 #!/bin/bash
 
-set -ex
+set -e
 
 if [ ! -z $1 ]; then cd $1; fi
+
+if [ -z $2 ] ; then
+	CODE_REF=unknown
+else
+	CODE_REF=$2
+fi
 
 python3 -m markdown2 -x smarty-pants,header-ids README.md > help/index.html
 # images src should now be "images/image.png" instead of "help/images/image.png":
@@ -20,4 +26,4 @@ echo '<h2 id="help-links">Links</h2>
 <li><a href="https://github.com/iona5/coordinator/issues">Bug Reports</a></li>
 </ul>' >> help/index.html
 
-echo "<p style='font-size: 8pt; font-style: italic; text-align: right'>git commit: $(git rev-parse --short HEAD 2>/dev/null)</p>" >> help/index.html
+echo "<p style='font-size: 8pt; font-style: italic; text-align: right'>git commit: ${CODE_REF}</p>" >> help/index.html

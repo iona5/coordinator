@@ -22,11 +22,10 @@ env:
   - QGIS_RELEASE=3_16
   
 script:
-  - cd ..
-  - mv -v coordinator/scripts/{build.sh,docker_test_setup.sh,travis_test.sh} .
-  - chmod +x build.sh docker_test_setup.sh travis_test.sh
-  - ./build.sh coordinator
-  - ./travis_test.sh ${QGIS_RELEASE}
+  - temp_dir=$(mktemp -d -t coordinator-build-XXXXXXXX)
+  - chmod +x scripts/{build.sh,docker_test_setup.sh,run_tests.sh}
+  - scripts/build.sh . ${temp_dir}
+  - scripts/run_tests.sh ${QGIS_RELEASE} ${temp_dir}
 
 jobs:
   include:
@@ -36,13 +35,13 @@ jobs:
         - QGIS_RELEASE=3_10
       script:
         - GIT_SHORT_HASH=$(git rev-parse --short HEAD)
-        - cd ..
-        - mv -v coordinator/scripts/build.sh .
-        - chmod +x build.sh
-        - ./build.sh coordinator
+        - temp_dir=$(mktemp -d -t coordinator-build-XXXXXXXX)
+        - mkdir -pv ${temp_dir}/coordinator
+        - chmod +x scripts/build.sh
+        - scripts/build.sh . ${temp_dir}/coordinator
         - export DEPLOY_FILENAME=coordinator-travis-${TRAVIS_TAG}-${GIT_SHORT_HASH}.zip
         - echo ${DEPLOY_FILENAME}
-        - zip -rv ${DEPLOY_FILENAME} coordinator
+        - zip -rv ${DEPLOY_FILENAME} ${temp_dir}/coordinator
       deploy:
         provider: releases
         api_key: 
